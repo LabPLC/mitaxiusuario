@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Mitaxi</string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <!-- Registro -->
+    <string name="mitaxiregister_btn_manually">Ingresar datos manualmente</string>
+    <string name="mitaxiregister_tv_o">O ingresar con:</string>
+    <string name="mitaxiregister_btn_googleplus">Google+</string>
+
+    <!-- Registro manualmente -->
+    <string name="mitaxiregister_name">Registro</string>
+    <string name="mitaxiregister_error">Corrige los datos antes de avanzar.</string>
+    <string name="mitaxiregister_error_string">Escribe cadena válida [a-z A-Z].</string>
+    <string name="mitaxiregister_error_number">Escribe número válido [0 9].</string>
+    <string name="mitaxiregister_error_email">Escribe sintaxis de correo válida.</string>
+    <string name="mitaxiregister_empty">Los campos no pueden dejarse en blanco.</string>
+    <string name="mitaxiregister_tv_title">Registro</string>
+    <string name="mitaxiregister_et_name_hint">Nombre completo</string>
+    <string name="mitaxiregister_et_email_hint">Dirección de correo</string>
+    <string name="mitaxiregister_et_teluser_hint">Teléfono</string>
+    <string name="mitaxiregister_et_telemergency_hint">Teléfono de emergencia</string>
+        <string name="mitaxiregister_et_mailemergency_hint">Correo de emergencia</string>
+    <string name="mitaxiregister_et_paraque">¿Para qué?</string>
+    <string name="mitaxiregister_btn_cancel">Cancelar</string>
+    <string name="mitaxiregister_btn_ok">Registrar</string>
+
+    <!-- Validations EditText -->
+    <string name="edittext_emtpy">Llena todos los campos.</string>
+    <string name="edittext_wrong_info">Corrige campos de texto incorrectos.</string>
+    <string name="edittext_error_string">Escribe cadena válida [a-z A-Z].</string>
+    <string name="edittext_error_number">Escribe número válido [0&#8211;9].</string>
+    <string name="edittext_error_email">Escribe sintaxis de correo válida.</string>
+    <string name="edittext_error_telephone_repeated">Teléfono de usuario y emergencia no debe ser el mismo</string>
+
+    <!-- Network -->
+    <string name="no_internet_connection">No hay conexión a internet.</string>
+    <string name="transaction_wrong">Ops#8230; Ocurrió un error al hacer la conexión con el servidor.</string>
+
+    <!-- Web service -->
+    <string name="webservice_host">http://codigo.labplc.mx/~mikesaurio/</string>
+    <string name="webservice_file">taxi.php</string>
+
+    <!-- Google Plus -->
+    <string name="plus_generic_error">Sign in with Google is not available.</string>
+    <string name="revoke_access_status">Revoked access.</string>
+    <string name="revoke_access_error_status">Unable to revoke access.</string>
+    <string name="unknown_person">Unknown</string>
+    <string name="unknown_email">Unknown</string>
+    <string name="signed_out_status">Signed out.</string>
+    <string name="signing_in_status">Signing in with Google+.</string>
+    <string name="signed_in_status">Signed in as %1$s with email %2$s.</string>
+    <string name="loading_status">Loading…</string>
+    <string name="sign_out_button_name">Sign out</string>
+    <string name="revoke_access_button_name">Revoke access</string>
+
+    <!-- ed -->
+    <string name="activity_name_trippreferences">Preferencias de viaje</string>
+
+    <!-- Address format -->
+    <string name="address_output_string">%1$s %2$s %3$s</string>
+
+    <!-- Latitude, longitude format -->
+    <string name="latitude_longitude">%1$.8f, %2$.8f</string>
+
+    <!-- Menu title -->
+    <string name="action_settings">Settings</string>
+
+    <!-- Labels -->
+    <string name="latlng">Lat/Long:</string>
+    <string name="address">Address:</string>
+
+    <!-- Messages -->
+    <string name="connected">Client connected</string>
+    <string name="connection_error_code_unknown">Unknown connection error code:  %1$d</string>
+    <string name="connection_failed">Connection failed</string>
+    <string name="disconnected">Client disconnected</string>
+    <string name="get_address">Get Address</string>
+    <string name="get_location">Get Location</string>
+    <string name="illegal_argument_exception">        Illegal arguments: Latitude %1$.8f Longitude %2$.8f</string>
+    <string name="invalid_action">Invalid intent action %1$s</string>
+    <string name="invalid_integer_id">Invalid integer request ID: %1$s</string>
+    <string name="IO_Exception_getFromLocation">IO Exception in Geocoder.getFromLocation()</string>
+    <string name="location_requested">Periodic updates requested</string>
+    <string name="location_updated">Location updated</string>
+    <string name="location_update_error">Location update failed</string>
+    <string name="location_update_error_detail">        Location update error. code %1$d message %2$s</string>
+    <string name="location_update_missing_update">        Location update error. No incoming location.</string>
+    <string name="location_updates_stopped">Periodic updates stopped</string>
+    <string name="log_new_location">New location: %1$s</string>
+    <string name="no_address_found">No address found for location</string>
+    <string name="no_connection">No connection: Cannot request location</string>
+    <string name="no_geocoder_available">Cannot get address. No geocoder available.</string>
+    <string name="no_location_available">Location not available</string>
+    <string name="resolved">Error resolved. Please re-try operation.</string>
+    <string name="no_resolution">Google Play services: unable to resolve connection error.</string>
+    <string name="periodic_update_stop">Stopping periodic updates</string>
+    <string name="play_services_available">Google Play services is available</string>
+    <string name="request_location_updates_in_progress">        Can\'t request location updates, previous request hasn\'t finished</string>
+    <string name="start_updates">Start Updates</string>
+    <string name="stop_updates">Stop Updates</string>
+    <string name="unknown">--Unknown--</string>
+    <string name="unknown_activity_request_code">        Received an unknown activity request code %1$d in onActivityResult.</string>
+
+    <!-- Connection Google Play Services -->
+    <string name="connection_error_code">Connection failure error code: %1$d</string>
+    <string name="connection_error_disabled">Google Play services is disabled</string>
+    <string name="connection_error_internal">An internal error occurred</string>
+    <string name="connection_error_invalid">The version of Google Play services on this device is not authentic</string>
+    <string name="connection_error_invalid_account">The specified account name is invalid</string>
+    <string name="connection_error_license_check_failed">The app is not licensed to the user</string>
+    <string name="connection_error_message">Connection failure error message: %1$s</string>
+    <string name="connection_error_misconfigured">The application is misconfigured</string>
+    <string name="connection_error_missing">Google Play services is missing</string>
+    <string name="connection_error_needs_resolution">Additional resolution is required</string>
+    <string name="connection_error_network">A network error occurred</string>
+    <string name="connection_error_outdated">Google Play services is out of date</string>
+    <string name="connection_error_sign_in_required">The user is not signed in</string>
+    <string name="connection_error_unknown">An unknown error occurred</string>
+
+    <!-- Maps -->
+    <string name="map_not_ready">Mapa no listo.</string>
+    <string name="mitaxi_googlemaps_tv_origin">Origen del viaje:</string>
+    <string name="mitaxi_googlemaps_actv_origin_hint">Mi ubicación actual</string>
+    <string name="mitaxi_googlemaps_tv_destination">Destino del viaje</string>
+    <string name="mitaxi_googlemaps_btn_more">MAS</string>
+    <string name="trippreferences_tv_referenceorigin">Referencia</string>
+    <string name="trippreferences_et_referenceorigin_hint">Ej. Puerta verde al lado de una cancha.</string>
+    <string name="trippreferences_tv_taxitype">Tipo de taxi</string>
+    <string name="trippreferences_tv_taxispecial">Taxi especial</string>
+    <string name="trippreferences_tv_passengers">Pasajeros</string>
+    <string name="trippreferences_tv_taxidriver">Choferes</string>
+    <string name="trippreferences_btn_mytaxidrivers">Mis favoritos</string>
+    <string name="trippreferences_btn_nearesttaxidrivers">Más cercanos</string>
+    <string name="trippreferences_btn_taketaxi">Pedir</string>
+
+    <!-- Drivers -->
+
+    <string name="custommitaxi_tv_drivertimedistance">A %1$s min. de tu posición aprox.</string>
+    <string name="customtaxidriver_tv_drivertype">%1$s</string>
+    <string name="customtaxidriver_tv_drivername">%1$s</string>
+    <string name="customtaxidriver_tv_driverid">Licencia: %1$s</string>
+    <string name="customtaxidriver_tv_driveridvalidity">Vigencia: %1$s</string>
+    <string name="customtaxidriver_tv_driverantiquity">Antigüedad %1$s</string>
+    <string name="customtaxidriver_tv_driverranking">Calificación: %1$s</string>
+    <string name="customtaxidriver_tv_drivertaxiplaca">Placas: %1$s</string>
+    <string name="customtaxidriver_tv_drivertaximodel">Auto: %1$s</string>
+    <string name="customtaxidriver_tv_drivernuminfrac">Infracciones: %1$s</string>
+    <string name="customtaxidriver_btn_selectdriver">¡Elígeme!</string>
+
+</resources>

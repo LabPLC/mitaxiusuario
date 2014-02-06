@@ -1,0 +1,129 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/mitaxi_googlemaps_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.MapFragment" />
+
+    <LinearLayout
+        android:id="@+id/mitaxi_googlemaps_ll_layoutcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/marco_negro"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/mitaxi_googlemaps_ll_etcontainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/mitaxi_googlemaps_tv_origin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mitaxi_googlemaps_tv_origin"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <AutoCompleteTextView
+                android:id="@+id/mitaxi_googlemaps_actv_origin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/mitaxi_googlemaps_actv_origin_hint"
+                android:lines="1"
+                android:maxLines="1"
+                android:text=""
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+            <TextView
+                android:id="@+id/mitaxi_googlemaps_tv_destination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mitaxi_googlemaps_tv_destination"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <AutoCompleteTextView
+                android:id="@+id/mitaxi_googlemaps_actv_destination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:maxLines="1"
+                android:text=""
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+        </LinearLayout>
+        <!--
+        <LinearLayout
+            android:id="@+id/mitaxi_googlemaps_ll_btncontainer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/mitaxi_googlemaps_ibtn_mylocation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/selector_btn_background"
+                android:contentDescription="@string/app_name"
+                android:src="@android:drawable/ic_menu_mylocation"
+                android:textColor="@drawable/selector_btn_textcolor" />
+
+            <Button
+                android:id="@+id/mitaxi_googlemaps_btn_more"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/selector_btn_background"
+                android:text="@string/mitaxi_googlemaps_btn_more"
+                android:textColor="@drawable/selector_btn_textcolor" />
+        </LinearLayout>
+        -->
+    </LinearLayout>
+
+    <SlidingDrawer
+        android:id="@+id/mitaxi_googlemapas_SlidingDrawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="150dp"
+        android:content="@+id/content"
+        android:handle="@+id/handle"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/handle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:src="@drawable/tab_open" />
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00FF00"
+            android:orientation="vertical" >
+
+            <include
+                android:id="@+id/include_activity_mitaxi_trippreferences"
+                layout="@layout/activity_mitaxi_trippreferences" />
+        </LinearLayout>
+    </SlidingDrawer>
+
+</RelativeLayout>

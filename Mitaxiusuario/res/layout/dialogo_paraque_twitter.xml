@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/marco" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/generic_amarillo" 
+                android:text="AVISO" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:padding="10dp"
+                android:background="@drawable/marco"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/generic_amarillo" 
+                    android:text="Los datos son necesarios para el alta" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/generic_amarillo" 
+                    android:text="Iniciar g+: para poder compartir con tus circulos y saber quien eres" />
+
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/generic_amarillo" 
+                    android:text="Teléfono: Para comunicarnos contigo." />
+
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/generic_amarillo" 
+                    android:text="Teléfono de emergencia: Para comunicarnos con un conocido en caso de que te sientas amenazado." />
+
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="2dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/dialogo_paraque_twitter_btnAceptar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:textColor="@drawable/selector_txt_boton_redondo"
+                android:background="@drawable/boton_redondo_focus"
+                android:text="Aceptar" />
+        </LinearLayout>
+    </FrameLayout>

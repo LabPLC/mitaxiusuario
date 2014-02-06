@@ -1,0 +1,50 @@
+package codigo.labplc.mx.mitaxiusuario.googlemaps.dialogues;
+
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
+/**
+ * 
+ * @author zace3d
+ * 
+ */
+public class Dialogues {
+
+	public static void Toast(Context context, String text, int duration) {
+		Toast.makeText(context, text, duration).show();
+	}
+
+	public static void Log(Context context, String text, int type) {
+		if (type == Log.DEBUG) {
+			Log.d(context.getClass().getName().toString(), text);
+		} else if (type == Log.ERROR) {
+			Log.e(context.getClass().getName().toString(), text);
+		} else if (type == Log.INFO) {
+			Log.i(context.getClass().getName().toString(), text);
+		} else if (type == Log.VERBOSE) {
+			Log.v(context.getClass().getName().toString(), text);
+		} else if (type == Log.WARN) {
+			Log.w(context.getClass().getName().toString(), text);
+		}
+	}
+
+	public ProgressDialog ProgressDialog(Activity activity, String title,
+			String message) {
+		ProgressDialog progressDialog = ProgressDialog.show(activity, title,
+				message, true);
+		return progressDialog;
+	}
+
+	public static Dialog ProgressCircleDialog(Activity activity) {
+		Dialog dialog = new Dialog(activity, android.R.style.Theme_Translucent_NoTitleBar);
+		dialog.setContentView(new DrawProgressCircleView(activity));
+		dialog.setCancelable(false);
+		dialog.setCanceledOnTouchOutside(false);
+		
+		return dialog;
+	}
+}
