@@ -39,6 +39,7 @@ import android.widget.SlidingDrawer.OnDrawerOpenListener;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 import codigo.labplc.mx.mitaxiusuario.R;
+import codigo.labplc.mx.mitaxiusuario.drivers.TaxiDriverActivity;
 import codigo.labplc.mx.mitaxiusuario.googlemaps.adapters.PlacesAutocompleteAdapter;
 import codigo.labplc.mx.mitaxiusuario.googlemaps.dialogues.Dialogues;
 import codigo.labplc.mx.mitaxiusuario.googlemaps.location.LocationUtils;
@@ -70,6 +71,8 @@ public class MitaxiGoogleMapsActivity extends FragmentActivity implements Locati
 GooglePlayServicesClient.OnConnectionFailedListener,OnMapClickListener, OnMarkerDragListener,OnMyLocationButtonClickListener, 
 OnItemClickListener {
 
+	private String location;
+	
 	// A request to connect to Location Services
     private LocationRequest mLocationRequest;
 
@@ -523,7 +526,7 @@ OnItemClickListener {
     	
     	Dialogues.Log(getApplicationContext(), "onConnected", Log.WARN);
     	
-    	String location = getFormatLocation();
+    	 location = getFormatLocation();
         Dialogues.Toast(getApplicationContext(), location, Toast.LENGTH_LONG);
         
         if(location != null) {
@@ -870,7 +873,7 @@ OnItemClickListener {
 						latlng,
 						"Origen",
 						true,
-						"¡Aquí inicia el viaje!", 
+						"Aqu� inicia el viaje!", 
 						BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 	    	} else {
 	    		listOriginDestinationMarkers[0].setPosition(latlng);
@@ -912,7 +915,11 @@ OnItemClickListener {
 				progressDialog.show();
 				(new MitaxiGoogleMapsActivity.GetAddressTask(this)).execute(getLocation());
 	            return true;
-
+	        case R.id.action_mas:
+	        	Intent intent = new Intent(MitaxiGoogleMapsActivity.this,TaxiDriverActivity.class);
+	        	intent.putExtra("location", location);
+	        	startActivity(intent);
+	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }

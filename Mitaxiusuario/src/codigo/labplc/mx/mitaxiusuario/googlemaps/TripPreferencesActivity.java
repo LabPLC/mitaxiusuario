@@ -35,32 +35,60 @@ public class TripPreferencesActivity  {
 
 		MyViewGroup vgTaxitype = (MyViewGroup) view.findViewById(R.id.trippreferences_vg_taxitype);
 		vgTaxitype.initUI(LinearLayout.HORIZONTAL);
-		addButtonsToMyGroupView(vgTaxitype);
+		addButtonsToMyGroupViewTIPO(vgTaxitype);
 
 		MyViewGroup vgTaxispecial = (MyViewGroup) view.findViewById(R.id.trippreferences_vg_taxispecial);
 		vgTaxispecial.initUI(LinearLayout.HORIZONTAL);
-		addButtonsToMyGroupView(vgTaxispecial);
+		addButtonsToMyGroupViewESPECIAL(vgTaxispecial);
 
 		MyViewGroup vgPassengers = (MyViewGroup) view.findViewById(R.id.trippreferences_vg_passengers);
 		vgPassengers.initUI(LinearLayout.HORIZONTAL);
-		addButtonsToMyGroupView(vgPassengers);
+		addButtonsToMyGroupViewPASAJEROS(vgPassengers);
 	}
 
-	public void addButtonsToMyGroupView(MyViewGroup vgTaxitype) {
+	public void addButtonsToMyGroupViewTIPO(MyViewGroup vgTaxitype) {
 		vgTaxitype.addView(createImageButton(
-				act.getResources().getDrawable(android.R.drawable.ic_menu_add),
-				act.getResources().getDrawable(android.R.drawable.ic_menu_agenda)));
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_taxi_libre_off),
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_taxi_libre_on)));
 		vgTaxitype.addView(createImageButton(
-				act.getResources().getDrawable(
-						android.R.drawable.ic_menu_always_landscape_portrait),
-						act.getResources().getDrawable(android.R.drawable.ic_menu_call)));
+				act.getResources().getDrawable(	R.drawable.mi_taxi_assets_taxi_sitio_off),
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_taxi_sitio_on)));
 		vgTaxitype.addView(createImageButton(
-				act.getResources().getDrawable(android.R.drawable.ic_menu_camera),
-				act.getResources().getDrawable(
-						android.R.drawable.ic_menu_close_clear_cancel)));
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_taxi_radio_off),
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_taxi_radio_on)));
 		vgTaxitype.addView(createImageButton(
-				act.getResources().getDrawable(android.R.drawable.ic_menu_compass),
-				act.getResources().getDrawable(android.R.drawable.ic_menu_crop)));
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_taxi_rosa_off),
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_taxi_rosa_on)));
+	}
+	
+	public void addButtonsToMyGroupViewESPECIAL(MyViewGroup vgTaxitype) {
+		vgTaxitype.addView(createImageButton(
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_accesible_off),
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_accesible_on)));
+		vgTaxitype.addView(createImageButton(
+				act.getResources().getDrawable(	R.drawable.mi_taxi_assets_bici_off),
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_bici_on)));
+		vgTaxitype.addView(createImageButton(
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_mascota_off),
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_mascota_on)));
+		vgTaxitype.addView(createImageButton(
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_english_off),
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_english_on)));
+	}
+	
+	public void addButtonsToMyGroupViewPASAJEROS(MyViewGroup vgTaxitype) {
+		vgTaxitype.addView(createImageButton(
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_1pasajero_off),
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_1pasajero_on)));
+		vgTaxitype.addView(createImageButton(
+				act.getResources().getDrawable(	R.drawable.mi_taxi_assets_2pasajeros_off),
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_2pasajeros_on)));
+		vgTaxitype.addView(createImageButton(
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_3pasajeros_off),
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_3pasajeros_on)));
+		vgTaxitype.addView(createImageButton(
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_4pasajeros_off),
+				act.getResources().getDrawable(R.drawable.mi_taxi_assets_4pasajeros_on)));
 	}
 
 	public MyView createImageButton(Drawable drawPressed, Drawable drwaUnpressed) {
