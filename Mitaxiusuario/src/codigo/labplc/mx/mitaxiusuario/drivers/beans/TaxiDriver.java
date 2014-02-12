@@ -12,7 +12,7 @@ public class TaxiDriver implements Serializable {
 	
 	public TaxiDriver(String name, String lastName, String id,
 			String idValidity, String antiquity, int ranking, String placa,
-			String taxiModelCar, int numInfrac, int taxiTypeId) {
+			String taxiModelCar, String sInfraccion, String string,String tiempo,String distance) {
 		super();
 		this.name = name;
 		this.lastName = lastName;
@@ -22,8 +22,10 @@ public class TaxiDriver implements Serializable {
 		this.ranking = ranking;
 		this.placa = placa;
 		this.taxiModelCar = taxiModelCar;
-		this.numInfrac = numInfrac;
-		this.taxiTypeId = taxiTypeId;
+		this.distance= distance;
+		this.tiempo=tiempo;
+		this.numInfracciones = sInfraccion;
+		this.taxiTypeId = string;
 	}
 
 	public String getName() {
@@ -74,20 +76,35 @@ public class TaxiDriver implements Serializable {
 	public void setTaxiModelCar(String taxiModelCar) {
 		this.taxiModelCar = taxiModelCar;
 	}
-	public int getNumInfrac() {
-		return numInfrac;
+	public String getNumInfrac() {
+		return numInfracciones;
 	}
-	public void setNumInfrac(int numInfrac) {
-		this.numInfrac = numInfrac;
+	public void setNumInfrac(String numInfrac) {
+		this.numInfracciones = numInfrac;
 	}
-	public int getTaxiTypeId() {
+	public String getTaxiTypeId() {
 		return taxiTypeId;
 	}
-	public void setTaxiTypeId(int taxiTypeId) {
+	public void setTaxiTypeId(String taxiTypeId) {
 		this.taxiTypeId = taxiTypeId;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	public String getDistance() {
+		return distance;
+	}
+
+	public void setDistance(String distance) {
+		this.distance = distance;
+	}
+
+	public String getTiempo() {
+		return tiempo;
+	}
+
+	public void setTiempo(String tiempo) {
+		this.tiempo = tiempo;
 	}
 
 	private String name;
@@ -98,6 +115,8 @@ public class TaxiDriver implements Serializable {
 	private int ranking;
 	private String placa;
 	private String taxiModelCar;
-	private int numInfrac;
-	private int taxiTypeId;
+	private String numInfracciones;
+	private String distance;
+	private String tiempo;
+	private String taxiTypeId;
 }

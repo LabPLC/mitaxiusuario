@@ -62,7 +62,8 @@ public class TaxiDriverPageFragment extends Fragment {
 		
 		// Distacia entre el taxista y el usuario
 		TextView tvDrivertimedistance = (TextView) rootView.findViewById(R.id.customtaxidriver_tv_drivertimedistance);
-		tvDrivertimedistance.setText(getString(R.string.custommitaxi_tv_drivertimedistance, String.valueOf(this.index)));
+		tvDrivertimedistance.setText("A " +taxiDriver.getDistance() + " Km  de ti ( "+ taxiDriver.getTiempo()+" min aproximadamente )");
+		//tvDrivertimedistance.setText(getString(R.string.custommitaxi_tv_drivertimedistance, String.valueOf(this.index)));
 		
 		// Imagen del taxista
         ImageView ivDriverphoto = (ImageView) rootView.findViewById(R.id.customtaxidriver_iv_driverphoto);

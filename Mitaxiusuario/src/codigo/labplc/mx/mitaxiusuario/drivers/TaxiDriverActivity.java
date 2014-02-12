@@ -26,6 +26,7 @@ import android.widget.Toast;
 import codigo.labplc.mx.mitaxiusuario.R;
 import codigo.labplc.mx.mitaxiusuario.drivers.adapters.TaxiDriverFragmentPagerAdapter;
 import codigo.labplc.mx.mitaxiusuario.drivers.animtrans.ZoomOutPageTransformer;
+import codigo.labplc.mx.mitaxiusuario.drivers.beans.BeanChoferes;
 import codigo.labplc.mx.mitaxiusuario.drivers.beans.TaxiDriver;
 
 public class TaxiDriverActivity extends FragmentActivity {
@@ -34,6 +35,7 @@ public class TaxiDriverActivity extends FragmentActivity {
 	private ViewPager mPager;
 	private TaxiDriverFragmentPagerAdapter mPagerAdapter;
 	private String location;
+	private ArrayList<BeanChoferes> beanTaxiDriver = new ArrayList<BeanChoferes>();
 	
 	private ArrayList<TaxiDriver> listTaxiDrivers = new ArrayList<TaxiDriver>();
 	
@@ -94,29 +96,72 @@ public class TaxiDriverActivity extends FragmentActivity {
 	   
 		
 		  JSONObject json= (JSONObject) new JSONTokener(querty).nextValue();
-	      JSONObject json2 = json.getJSONObject("Taxi");
+	      JSONObject json2 = json.getJSONObject("message");
 	      JSONObject jsonResponse = new JSONObject(json2.toString());
-	      JSONArray cast = jsonResponse.getJSONArray("concesion");
+	      JSONArray cast = jsonResponse.getJSONArray("chofer");
 	      for (int i=0; i<cast.length(); i++) {
 	          	JSONObject oneObject = cast.getJSONObject(i);
-				 try {
-					/* marca = (String) oneObject.getString("marca");
-					 autoBean.setMarca(marca);
-					 submarca = (String)  oneObject.getString("submarca");
-					 autoBean.setSubmarca(submarca);
-					 anio = (String)  oneObject.getString("anio");
-					 autoBean.setAnio(anio);*/
-				 } catch (Exception e) { }//return false;}
+	          	BeanChoferes td = new BeanChoferes();
+			
+					 td.setPk_chofer(oneObject.getString("pk_chofer"));
+					
+					
+					 td.setPlaca(oneObject.getString("placa"));
+					 
+					 td.setLatitud(oneObject.getString("latitud"));
+					 
+					 td.setLongitud(oneObject.getString("longitud"));
+					 
+					 td.setNombre(oneObject.getString("nombre"));
+					 
+					 td.setApellido_paterno(oneObject.getString("apellido_paterno"));
+					 
+					 td.setApellido_materno(oneObject.getString("apellido_materno"));
+					 
+					 td.setAntiguedad(oneObject.getString("antiguedad"));
+					 
+					 td.setVigencia(oneObject.getString("vigencia"));
+					 
+					 td.setTelefono(oneObject.getString("telefono"));
+					 
+					 td.setLicencia(oneObject.getString("licencia"));
+					 
+					 td.setRanking(oneObject.getString("ranking"));			
+			
+					 td.setMarca(oneObject.getString("marca"));
+					 
+					 td.setSubmarca(oneObject.getString("submarca"));
+					 
+					 td.setAnio(oneObject.getString("anio"));
+					 
+					 td.setTipo_taxi(oneObject.getString("tipo_taxi"));			
+					
+					 td.setDiscapacitados(oneObject.getString("discapacitados"));
+					 
+					 td.setBicicleta(oneObject.getString("bicicleta"));
+					 
+					 td.setMascotas(oneObject.getString("mascotas"));
+					 
+				
+				String consulta2 = "http://datos.labplc.mx/~mikesaurio/taxi.php?act=chofer&type=getGoogleData&lato="+slocation[0]+"&lngo="+slocation[1]+"&latd="+ td.getLongitud()+"&lngd="+ td.getLatitud()+"&filtro=velocidad";
+				Log.d("**********************", consulta2+"");
+				String querty2 = doHttpConnection(consulta2);
+				querty2  = querty2.replaceAll("\"", "");
+				String sdistance[] = querty2.split(",");	 
+					 
+			beanTaxiDriver.add(td);
+			listTaxiDrivers.add(new TaxiDriver(td.getNombre() , td.getApellido_paterno()+ " "+td.getApellido_materno() , td.getLicencia(), td.getAntiguedad(), td.getVigencia(), 1,td.getPlaca(),td.getMarca()+" "+td.getSubmarca()+" " + td.getAnio(),"1", td.getTipo_taxi(),sdistance[0],sdistance[1] ));
+
+			
 	      }
-		listTaxiDrivers.clear();
+		//listTaxiDrivers.clear();
 		
 		
 		
 		
-		listTaxiDrivers.add(new TaxiDriver("Enrique" , "López", "L32154", "2014-05-03", "1999-06-10", 5, "A12323", "Chevrolet Chevy 2010", 5, 1));
-		listTaxiDrivers.add(new TaxiDriver("Edgar" , "Zavala", "A0987", "2014-05-03", "1999-06-10", 1, "L32154", "Nissan Tsuru 2013", 1, 2));
-		listTaxiDrivers.add(new TaxiDriver("Miguel" , "Morán", "A3456", "2014-05-03", "1999-06-10", 1, "L32154", "Nissan Tsuru 2013", 1, 2));
-		listTaxiDrivers.add(new TaxiDriver("Ruu" , "Rámirez", "aaa111", "2014-05-03", "1999-06-10", 1, "L32154", "Nissan Tsuru 2013", 1, 2));
+		//listTaxiDrivers.add(new TaxiDriver("Enrique" , "López", "L32154", "2014-05-03", "1999-06-10", 5, "A12323", "Chevrolet Chevy 2010", 5, 1));
+		//listTaxiDrivers.add(new TaxiDriver("Edgar" , "Zavala", "A0987", "2014-05-03", "1999-06-10", 1, "L32154", "Nissan Tsuru 2013", 1, 2));
+		//listTaxiDrivers.add(new TaxiDriver("Miguel" , "Morán", "A3456", "2014-05-03", "1999-06-10", 1, "L32154", "Nissan Tsuru 2013", 1, 2));
 	}
 	
 	/**
