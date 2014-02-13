@@ -92,65 +92,61 @@ public class TaxiDriverActivity extends FragmentActivity {
 		
 		String consulta = "http://datos.labplc.mx/~mikesaurio/taxi.php?act=chofer&type=getlogin&pk="+uuid+"&lat="+slocation[0]+"&lng="+slocation[1]+"&discapacitados=TRUE&bicicleta=TRUE&mascotas=FALSE&tipo=Sitio";
 		String querty = doHttpConnection(consulta);
-		//Log.d("**************", querty+"");
 	   
-		
 		  JSONObject json= (JSONObject) new JSONTokener(querty).nextValue();
 	      JSONObject json2 = json.getJSONObject("message");
 	      JSONObject jsonResponse = new JSONObject(json2.toString());
 	      JSONArray cast = jsonResponse.getJSONArray("chofer");
+	   
+	      listTaxiDrivers.clear();
+	      beanTaxiDriver.clear();
 	      for (int i=0; i<cast.length(); i++) {
 	          	JSONObject oneObject = cast.getJSONObject(i);
 	          	BeanChoferes td = new BeanChoferes();
 			
 					 td.setPk_chofer(oneObject.getString("pk_chofer"));
-					
-					
 					 td.setPlaca(oneObject.getString("placa"));
-					 
 					 td.setLatitud(oneObject.getString("latitud"));
-					 
 					 td.setLongitud(oneObject.getString("longitud"));
-					 
 					 td.setNombre(oneObject.getString("nombre"));
-					 
 					 td.setApellido_paterno(oneObject.getString("apellido_paterno"));
-					 
 					 td.setApellido_materno(oneObject.getString("apellido_materno"));
-					 
 					 td.setAntiguedad(oneObject.getString("antiguedad"));
-					 
 					 td.setVigencia(oneObject.getString("vigencia"));
-					 
 					 td.setTelefono(oneObject.getString("telefono"));
-					 
 					 td.setLicencia(oneObject.getString("licencia"));
-					 
 					 td.setRanking(oneObject.getString("ranking"));			
-			
 					 td.setMarca(oneObject.getString("marca"));
-					 
 					 td.setSubmarca(oneObject.getString("submarca"));
-					 
 					 td.setAnio(oneObject.getString("anio"));
-					 
 					 td.setTipo_taxi(oneObject.getString("tipo_taxi"));			
-					
 					 td.setDiscapacitados(oneObject.getString("discapacitados"));
-					 
 					 td.setBicicleta(oneObject.getString("bicicleta"));
-					 
 					 td.setMascotas(oneObject.getString("mascotas"));
 					 
 				
 				String consulta2 = "http://datos.labplc.mx/~mikesaurio/taxi.php?act=chofer&type=getGoogleData&lato="+slocation[0]+"&lngo="+slocation[1]+"&latd="+ td.getLongitud()+"&lngd="+ td.getLatitud()+"&filtro=velocidad";
-				Log.d("**********************", consulta2+"");
 				String querty2 = doHttpConnection(consulta2);
 				querty2  = querty2.replaceAll("\"", "");
 				String sdistance[] = querty2.split(",");	 
 					 
+				String placa  = td.getPlaca().replaceAll(" ", "");
+				String consulta3 = "http://datos.labplc.mx/movilidad/vehiculos/"+placa+".json";
+				String querty3 = doHttpConnection(consulta3);
+				int infracciones = 0;
+				
+				JSONObject json3= (JSONObject) new JSONTokener(querty3).nextValue();
+			      JSONObject json23 = json3.getJSONObject("consulta");
+			      JSONObject jsonResponse3 = new JSONObject(json23.toString());
+			      JSONArray cast3 = jsonResponse3.getJSONArray("infracciones");
+			      for (int i3=0; i3<cast3.length(); i3++) {
+			          	//JSONObject oneObject3 = cast3.getJSONObject(i3);
+			    	  infracciones+=1;
+							// td.setPk_chofer(oneObject3.getString("pk_chofer"));
+			      }
+				
 			beanTaxiDriver.add(td);
-			listTaxiDrivers.add(new TaxiDriver(td.getNombre() , td.getApellido_paterno()+ " "+td.getApellido_materno() , td.getLicencia(), td.getAntiguedad(), td.getVigencia(), 1,td.getPlaca(),td.getMarca()+" "+td.getSubmarca()+" " + td.getAnio(),"1", td.getTipo_taxi(),sdistance[0],sdistance[1] ));
+			listTaxiDrivers.add(new TaxiDriver(td.getNombre() , td.getApellido_paterno()+ " "+td.getApellido_materno() , td.getLicencia(), td.getAntiguedad(), td.getVigencia(), 1,td.getPlaca(),td.getMarca()+" "+td.getSubmarca()+" " + td.getAnio(),infracciones+"", td.getTipo_taxi(),sdistance[0],sdistance[1] ));
 
 			
 	      }
