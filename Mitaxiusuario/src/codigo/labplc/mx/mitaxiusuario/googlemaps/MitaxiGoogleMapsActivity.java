@@ -121,7 +121,9 @@ OnItemClickListener {
 		
 		initUI();
 		
-		new TripPreferencesActivity(this);		
+		TripPreferencesActivity tripPreferencesActivity = new TripPreferencesActivity(this);		
+		
+		
 		
 		SpinnerAdapter adapter = ArrayAdapter.createFromResource(this, R.array.actions,android.R.layout.simple_spinner_dropdown_item);
 		OnNavigationListener callback = new OnNavigationListener() {
@@ -918,6 +920,15 @@ OnItemClickListener {
 	        case R.id.action_mas:
 	        	Intent intent = new Intent(MitaxiGoogleMapsActivity.this,TaxiDriverActivity.class);
 	        	intent.putExtra("location", location);
+	        	intent.putExtra("pasajeros", TripPreferencesActivity.PASAJEROS);
+	        	intent.putExtra("libre", TripPreferencesActivity.libre);
+	        	intent.putExtra("sitio", TripPreferencesActivity.sitio);
+	        	intent.putExtra("radio", TripPreferencesActivity.radio);
+	        	intent.putExtra("rosa", TripPreferencesActivity.rosa);
+	        	intent.putExtra("discapacitados", TripPreferencesActivity.discapacitados);
+	        	intent.putExtra("bicicleta", TripPreferencesActivity.bicicleta);
+	        	intent.putExtra("mascotas", TripPreferencesActivity.mascotas);
+	        	intent.putExtra("ingles", TripPreferencesActivity.ingles);
 	        	startActivity(intent);
 	        	return true;
 	        default:

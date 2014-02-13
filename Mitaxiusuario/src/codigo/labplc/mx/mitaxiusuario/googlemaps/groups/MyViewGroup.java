@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import codigo.labplc.mx.mitaxiusuario.R;
+import codigo.labplc.mx.mitaxiusuario.googlemaps.TripPreferencesActivity;
 import codigo.labplc.mx.mitaxiusuario.googlemaps.beans.MyView;
 
 /**
@@ -19,6 +21,7 @@ import codigo.labplc.mx.mitaxiusuario.googlemaps.beans.MyView;
 public class MyViewGroup extends LinearLayout {
 	private ArrayList<MyView> listViews = new ArrayList<MyView>();
 	private LinearLayout llContainer;
+	private boolean multiClikc; //indica si permite el multiclick
 	
 	public MyViewGroup(Context context) {
 		super(context);
@@ -32,7 +35,8 @@ public class MyViewGroup extends LinearLayout {
 		super(context, attrs, defStyle);
 	}
 	
-	public void initUI(int orientation) {
+	public void initUI(int orientation,boolean multiClikc) {
+		this.multiClikc=multiClikc;
 		if(orientation == LinearLayout.HORIZONTAL)
 			this.addView(initHorizontalUI());
 		else if(orientation == LinearLayout.VERTICAL)
@@ -78,11 +82,55 @@ public class MyViewGroup extends LinearLayout {
 		public void onClick(View v) {
 			int index = v.getId();
 			MyView myView = listViews.get(index);
-			myView.isSelected = true;
-			myView.view.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-			myView.view.setImageDrawable(myView.drawPressed);
-			
-			invalidateViews(index);
+			if(!myView.isSelected){
+				myView.isSelected = true;
+				myView.view.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+				myView.view.setImageDrawable(myView.drawPressed);
+				if(myView.id.equals("discapacitados")){
+					TripPreferencesActivity.discapacitados= true;
+				}else if(myView.id.equals("bicicleta")){
+					TripPreferencesActivity.bicicleta= true;
+				}else if(myView.id.equals("mascotas")){
+					TripPreferencesActivity.mascotas= true;
+				}else if(myView.id.equals("ingles")){
+					TripPreferencesActivity.ingles= true;
+				}else if(myView.id.equals("libre")){
+					TripPreferencesActivity.libre= true;
+				}else if(myView.id.equals("sitio")){
+					TripPreferencesActivity.sitio= true;
+				}else if(myView.id.equals("radio")){
+					TripPreferencesActivity.radio= true;
+				}else if(myView.id.equals("rosa")){
+					TripPreferencesActivity.rosa= true;
+				}
+			}else{
+				myView.view.setBackgroundResource(R.drawable.selector_btn_background);
+				myView.view.setImageDrawable(myView.drawUnpressed);
+				myView.isSelected = false;
+				if(myView.id.equals("discapacitados")){
+					TripPreferencesActivity.discapacitados= false;
+				}else if(myView.id.equals("bicicleta")){
+					TripPreferencesActivity.bicicleta= false;
+				}else if(myView.id.equals("mascotas")){
+					TripPreferencesActivity.mascotas= false;
+				}else if(myView.id.equals("ingles")){
+					TripPreferencesActivity.ingles= false;
+				}else if(myView.id.equals("ingles")){
+					TripPreferencesActivity.ingles= false;
+				}else if(myView.id.equals("libre")){
+					TripPreferencesActivity.libre= false;
+				}else if(myView.id.equals("sitio")){
+					TripPreferencesActivity.sitio= false;
+				}else if(myView.id.equals("radio")){
+					TripPreferencesActivity.radio= false;
+				}else if(myView.id.equals("rosa")){
+					TripPreferencesActivity.rosa= false;
+				} 
+			}
+			if(!multiClikc){
+				invalidateViews(index);
+				TripPreferencesActivity.PASAJEROS = myView.id;
+			}
 		}
 	};
 	
@@ -103,4 +151,6 @@ public class MyViewGroup extends LinearLayout {
 			}
 		}
 	}
+
+
 }

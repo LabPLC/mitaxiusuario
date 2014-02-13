@@ -13,13 +13,15 @@ public class MyView {
 	public Drawable drawPressed;
 	public Drawable drawUnpressed;
 	public boolean isSelected = false;
+	public String id;
 	
 	public MyView(ImageButton view, Drawable drawPressed, Drawable drawUnpressed,
-			boolean isSelected) {
+			boolean isSelected, String id) {
 		super();
 		this.view = view;
 		this.drawPressed = drawPressed;
 		this.drawUnpressed = drawUnpressed;
 		this.isSelected = isSelected;
+		this.id=id;
 	}
 }
