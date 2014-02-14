@@ -28,13 +28,15 @@ import codigo.labplc.mx.mitaxiusuario.drivers.adapters.TaxiDriverFragmentPagerAd
 import codigo.labplc.mx.mitaxiusuario.drivers.animtrans.ZoomOutPageTransformer;
 import codigo.labplc.mx.mitaxiusuario.drivers.beans.BeanChoferes;
 import codigo.labplc.mx.mitaxiusuario.drivers.beans.TaxiDriver;
+import codigo.labplc.mx.mitaxiusuario.googlemaps.TripPreferencesActivity;
 
 public class TaxiDriverActivity extends FragmentActivity {
 	//private int NUM_PAGES = 0;
 	
 	private ViewPager mPager;
 	private TaxiDriverFragmentPagerAdapter mPagerAdapter;
-	private String location;
+	private String location,pasajeros;
+	boolean libre,sitio,radio,rosa,discapacitados,bicicleta,mascotas,ingles;
 	private ArrayList<BeanChoferes> beanTaxiDriver = new ArrayList<BeanChoferes>();
 	
 	private ArrayList<TaxiDriver> listTaxiDrivers = new ArrayList<TaxiDriver>();
@@ -45,9 +47,16 @@ public class TaxiDriverActivity extends FragmentActivity {
 		setContentView(R.layout.activity_mitaxi_taxidriver);
 		 Bundle bundle = getIntent().getExtras();
 		 location =  bundle.getString("location");
-		
-		Toast.makeText(getBaseContext(), location+"", Toast.LENGTH_LONG).show();
-		
+		 pasajeros =  bundle.getString("pasajeros");
+		 libre =  bundle.getBoolean("libre");
+		 sitio =  bundle.getBoolean("sitio");
+		 radio =  bundle.getBoolean("radio");
+		 rosa =  bundle.getBoolean("rosa");
+		 discapacitados =  bundle.getBoolean("discapacitados");
+		 bicicleta =  bundle.getBoolean("bicicleta");
+		 mascotas =  bundle.getBoolean("mascotas");
+		 ingles =  bundle.getBoolean("ingles");
+		 
 		initUI();
 	}
 
@@ -90,14 +99,23 @@ public class TaxiDriverActivity extends FragmentActivity {
 		location  = location.replaceFirst(",", ".");
 		String slocation[] = location.split("@");
 		
-		String consulta = "http://datos.labplc.mx/~mikesaurio/taxi.php?act=chofer&type=getlogin&pk="+uuid+"&lat="+slocation[0]+"&lng="+slocation[1]+"&discapacitados=TRUE&bicicleta=TRUE&mascotas=FALSE&tipo=Sitio";
+		String consulta = "http://datos.labplc.mx/~mikesaurio/taxi.php?act=chofer&type=getlogin&pk="+uuid+"&lat="+slocation[0]+"&lng="+slocation[1]+"&discapacitados="+discapacitados+"&bicicleta="+bicicleta+"&mascotas="+mascotas+"&libre="+libre+"&sitio="+sitio+"&radio="+radio+"&rosa="+rosa;
+		Log.d("********************", consulta+"");
+		
 		String querty = doHttpConnection(consulta);
 	   
+		
+	//	
+	
 		  JSONObject json= (JSONObject) new JSONTokener(querty).nextValue();
 	      JSONObject json2 = json.getJSONObject("message");
 	      JSONObject jsonResponse = new JSONObject(json2.toString());
 	      JSONArray cast = jsonResponse.getJSONArray("chofer");
-	   
+	    //  Log.d("********************", cast.length()+"");
+	      if(cast.length()<=0){
+		    	 Toast.makeText(getBaseContext(), "No existen choferes con esas caracteristicas por ahora", Toast.LENGTH_LONG).show(); 
+		    	 TaxiDriverActivity.this.finish();
+	      }
 	      listTaxiDrivers.clear();
 	      beanTaxiDriver.clear();
 	      for (int i=0; i<cast.length(); i++) {
@@ -140,25 +158,15 @@ public class TaxiDriverActivity extends FragmentActivity {
 			      JSONObject jsonResponse3 = new JSONObject(json23.toString());
 			      JSONArray cast3 = jsonResponse3.getJSONArray("infracciones");
 			      for (int i3=0; i3<cast3.length(); i3++) {
-			          	//JSONObject oneObject3 = cast3.getJSONObject(i3);
 			    	  infracciones+=1;
-							// td.setPk_chofer(oneObject3.getString("pk_chofer"));
 			      }
 				
 			beanTaxiDriver.add(td);
 			listTaxiDrivers.add(new TaxiDriver(td.getNombre() , td.getApellido_paterno()+ " "+td.getApellido_materno() , td.getLicencia(), td.getAntiguedad(), td.getVigencia(), 1,td.getPlaca(),td.getMarca()+" "+td.getSubmarca()+" " + td.getAnio(),infracciones+"", td.getTipo_taxi(),sdistance[0],sdistance[1] ));
-
+	     
 			
 	      }
-		//listTaxiDrivers.clear();
-		
-		
-		
-		
-		//listTaxiDrivers.add(new TaxiDriver("Enrique" , "López", "L32154", "2014-05-03", "1999-06-10", 5, "A12323", "Chevrolet Chevy 2010", 5, 1));
-		//listTaxiDrivers.add(new TaxiDriver("Edgar" , "Zavala", "A0987", "2014-05-03", "1999-06-10", 1, "L32154", "Nissan Tsuru 2013", 1, 2));
-		//listTaxiDrivers.add(new TaxiDriver("Miguel" , "Morán", "A3456", "2014-05-03", "1999-06-10", 1, "L32154", "Nissan Tsuru 2013", 1, 2));
-	}
+}
 	
 	/**
 	 * {@link onBackPressed}
