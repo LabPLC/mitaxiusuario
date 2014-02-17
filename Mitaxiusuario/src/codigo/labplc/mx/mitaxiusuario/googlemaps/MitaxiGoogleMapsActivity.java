@@ -918,8 +918,10 @@ OnItemClickListener {
 				(new MitaxiGoogleMapsActivity.GetAddressTask(this)).execute(getLocation());
 	            return true;
 	        case R.id.action_mas:
+
 	        	Intent intent = new Intent(MitaxiGoogleMapsActivity.this,TaxiDriverActivity.class);
 	        	intent.putExtra("location", location);
+	        //	actvDestination
 	        	intent.putExtra("pasajeros", TripPreferencesActivity.PASAJEROS);
 	        	intent.putExtra("libre", TripPreferencesActivity.libre);
 	        	intent.putExtra("sitio", TripPreferencesActivity.sitio);

@@ -7,6 +7,18 @@ public class TaxiDriver implements Serializable {
 	 * ID taxidriver serialization
 	 */
 	private static final long serialVersionUID = -1098245708702892529L;
+	private String name;
+	private String lastName;
+	private String id;
+	private String idValidity;
+	private String antiquity;
+	private int ranking;
+	private String placa;
+	private String taxiModelCar;
+	private String numInfracciones;
+	private String distance;
+	private String tiempo;
+	private String taxiTypeId;
 	
 	public TaxiDriver(){}
 	
@@ -107,16 +119,5 @@ public class TaxiDriver implements Serializable {
 		this.tiempo = tiempo;
 	}
 
-	private String name;
-	private String lastName;
-	private String id;
-	private String idValidity;
-	private String antiquity;
-	private int ranking;
-	private String placa;
-	private String taxiModelCar;
-	private String numInfracciones;
-	private String distance;
-	private String tiempo;
-	private String taxiTypeId;
+	
 }

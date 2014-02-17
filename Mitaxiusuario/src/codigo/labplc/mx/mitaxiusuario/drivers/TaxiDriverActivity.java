@@ -100,13 +100,11 @@ public class TaxiDriverActivity extends FragmentActivity {
 		String slocation[] = location.split("@");
 		
 		String consulta = "http://datos.labplc.mx/~mikesaurio/taxi.php?act=chofer&type=getlogin&pk="+uuid+"&lat="+slocation[0]+"&lng="+slocation[1]+"&discapacitados="+discapacitados+"&bicicleta="+bicicleta+"&mascotas="+mascotas+"&libre="+libre+"&sitio="+sitio+"&radio="+radio+"&rosa="+rosa;
-		Log.d("********************", consulta+"");
+		//Log.d("********************", consulta+"");
 		
 		String querty = doHttpConnection(consulta);
 	   
 		
-	//	
-	
 		  JSONObject json= (JSONObject) new JSONTokener(querty).nextValue();
 	      JSONObject json2 = json.getJSONObject("message");
 	      JSONObject jsonResponse = new JSONObject(json2.toString());

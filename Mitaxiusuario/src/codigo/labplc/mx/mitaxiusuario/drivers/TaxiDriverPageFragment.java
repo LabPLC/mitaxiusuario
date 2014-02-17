@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import codigo.labplc.mx.mitaxiusuario.R;
 import codigo.labplc.mx.mitaxiusuario.drivers.beans.TaxiDriver;
 
@@ -57,7 +58,7 @@ public class TaxiDriverPageFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.custom_mitaxi_taxidriver, container,
+		final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.custom_mitaxi_taxidriver, container,
 				false);
 		
 		// Distacia entre el taxista y el usuario
@@ -71,13 +72,15 @@ public class TaxiDriverPageFragment extends Fragment {
         
         // Tipo de taxi
         TextView tvDrivertype = (TextView) rootView.findViewById(R.id.customtaxidriver_tv_drivertype);
-        tvDrivertype.setText(getString(R.string.customtaxidriver_tv_drivertype, taxiDriver.getTaxiTypeId()));
+        tvDrivertype.setText("Tipo: "+getString(R.string.customtaxidriver_tv_drivertype, taxiDriver.getTaxiTypeId()));
         
         // Botón elegir taxista
         Button btnSelectdriver = (Button) rootView.findViewById(R.id.customtaxidriver_btn_selectdriver);
         btnSelectdriver.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				
+				Toast.makeText(rootView.getContext(), "hola", Toast.LENGTH_LONG).show();
 				
 			}
 		});
