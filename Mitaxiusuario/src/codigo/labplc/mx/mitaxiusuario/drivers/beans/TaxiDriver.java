@@ -19,12 +19,24 @@ public class TaxiDriver implements Serializable {
 	private String distance;
 	private String tiempo;
 	private String taxiTypeId;
+	private String pk_chofer;
+	private String pk_usuario;
+	private String origen;
+	private String destino;
+	private String personas;
+	private boolean mascotas;
+	private boolean discapacitados;
+	private boolean bicicletas;
 	
+
+
 	public TaxiDriver(){}
 	
 	public TaxiDriver(String name, String lastName, String id,
 			String idValidity, String antiquity, int ranking, String placa,
-			String taxiModelCar, String sInfraccion, String string,String tiempo,String distance) {
+			String taxiModelCar, String sInfraccion, String string,String tiempo,
+			String distance,String pk_chofer,String pk_usuario,String origen,String destino,String personas,
+			boolean mascotas, boolean discapacitados, boolean bicicletas) {
 		super();
 		this.name = name;
 		this.lastName = lastName;
@@ -38,6 +50,30 @@ public class TaxiDriver implements Serializable {
 		this.tiempo=tiempo;
 		this.numInfracciones = sInfraccion;
 		this.taxiTypeId = string;
+		this.pk_chofer=pk_chofer;
+		this.pk_usuario=pk_usuario;
+		this.origen= origen;
+		this.destino=destino;
+		this.personas=personas;
+		this.mascotas=mascotas;
+		this.discapacitados=discapacitados;
+		this.bicicletas=bicicletas;
+	}
+
+	public String getOrigen() {
+		return origen;
+	}
+
+	public void setOrigen(String origen) {
+		this.origen = origen;
+	}
+
+	public String getPk_usuario() {
+		return pk_usuario;
+	}
+
+	public void setPk_usuario(String pk_usuario) {
+		this.pk_usuario = pk_usuario;
 	}
 
 	public String getName() {
@@ -52,6 +88,22 @@ public class TaxiDriver implements Serializable {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	public String getNumInfracciones() {
+		return numInfracciones;
+	}
+
+	public void setNumInfracciones(String numInfracciones) {
+		this.numInfracciones = numInfracciones;
+	}
+
+	public String getPk_chofer() {
+		return pk_chofer;
+	}
+
+	public void setPk_chofer(String pk_chofer) {
+		this.pk_chofer = pk_chofer;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -118,6 +170,44 @@ public class TaxiDriver implements Serializable {
 	public void setTiempo(String tiempo) {
 		this.tiempo = tiempo;
 	}
+	public String getDestino() {
+		return destino;
+	}
 
+	public void setDestino(String destino) {
+		this.destino = destino;
+	}
+
+	public String getPersonas() {
+		return personas;
+	}
+
+	public void setPersonas(String personas) {
+		this.personas = personas;
+	}
+
+	public boolean getMascotas() {
+		return mascotas;
+	}
+
+	public void setMascotas(boolean mascotas) {
+		this.mascotas = mascotas;
+	}
+
+	public boolean getDiscapacitados() {
+		return discapacitados;
+	}
+
+	public void setDiscapacitados(boolean discapacitados) {
+		this.discapacitados = discapacitados;
+	}
+
+	public boolean getBicicletas() {
+		return bicicletas;
+	}
+
+	public void setBicicletas(boolean bicicletas) {
+		this.bicicletas = bicicletas;
+	}
 	
 }

@@ -94,10 +94,13 @@ public class TaxiDriverActivity extends FragmentActivity {
 		SharedPreferences prefs = getSharedPreferences("MisPreferenciasPasajero",Context.MODE_PRIVATE);
 		String uuid = prefs.getString("uuid", null);
 		//arreglamos las coordenadas
+		Log.d("********************",  location+"");
 		location  = location.replaceFirst(",", ".");
-		location  = location.replaceFirst(", ", "@");
+		location  = location.replaceFirst(". ", "@");
 		location  = location.replaceFirst(",", ".");
 		String slocation[] = location.split("@");
+		
+		Log.d("********************",  slocation[0]+"");
 		
 		String consulta = "http://datos.labplc.mx/~mikesaurio/taxi.php?act=chofer&type=getlogin&pk="+uuid+"&lat="+slocation[0]+"&lng="+slocation[1]+"&discapacitados="+discapacitados+"&bicicleta="+bicicleta+"&mascotas="+mascotas+"&libre="+libre+"&sitio="+sitio+"&radio="+radio+"&rosa="+rosa;
 		//Log.d("********************", consulta+"");
@@ -119,9 +122,11 @@ public class TaxiDriverActivity extends FragmentActivity {
 	      for (int i=0; i<cast.length(); i++) {
 	          	JSONObject oneObject = cast.getJSONObject(i);
 	          	BeanChoferes td = new BeanChoferes();
-			
+	          
+
+	          	     td.setPk_usuario(uuid);
 					 td.setPk_chofer(oneObject.getString("pk_chofer"));
-					 td.setPlaca(oneObject.getString("placa"));
+					 td.setPlaca(oneObject.getString("placa").replaceAll(" ", ""));
 					 td.setLatitud(oneObject.getString("latitud"));
 					 td.setLongitud(oneObject.getString("longitud"));
 					 td.setNombre(oneObject.getString("nombre"));
@@ -160,7 +165,13 @@ public class TaxiDriverActivity extends FragmentActivity {
 			      }
 				
 			beanTaxiDriver.add(td);
-			listTaxiDrivers.add(new TaxiDriver(td.getNombre() , td.getApellido_paterno()+ " "+td.getApellido_materno() , td.getLicencia(), td.getAntiguedad(), td.getVigencia(), 1,td.getPlaca(),td.getMarca()+" "+td.getSubmarca()+" " + td.getAnio(),infracciones+"", td.getTipo_taxi(),sdistance[0],sdistance[1] ));
+			listTaxiDrivers.add(new TaxiDriver(td.getNombre() , td.getApellido_paterno()+ " "+td.getApellido_materno() , 
+					td.getLicencia(), td.getAntiguedad(), td.getVigencia(), 1,
+					td.getPlaca(),td.getMarca()+" "+td.getSubmarca()+" " + td.getAnio(),infracciones+"",
+					td.getTipo_taxi(),sdistance[0],sdistance[1],td.getPk_chofer(),td.getPk_usuario(),
+					slocation[0]+","+slocation[1],
+					slocation[0]+","+slocation[1],
+					pasajeros,mascotas,discapacitados,bicicleta));
 	     
 			
 	      }

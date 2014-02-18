@@ -3,6 +3,7 @@ package codigo.labplc.mx.mitaxiusuario.drivers.beans;
 public class BeanChoferes {
 
 	private String pk_chofer;
+	private String pk_usuario;
 	private String placa;
 	private String latitud;
 	private String longitud;
@@ -191,5 +192,13 @@ public class BeanChoferes {
 	public void setRanking(String ranking) {
 		this.ranking = ranking;
 	}
+	public String getPk_usuario() {
+		return pk_usuario;
+	}
+
+	public void setPk_usuario(String pk_usuario) {
+		this.pk_usuario = pk_usuario;
+	}
+
 
 }
