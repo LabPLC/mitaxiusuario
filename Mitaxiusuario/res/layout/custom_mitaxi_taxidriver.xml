@@ -8,7 +8,7 @@
         android:id="@+id/customtaxidriver_tv_drivertimedistance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
+        android:background="@android:color/black"
         android:gravity="center"
         android:text="@string/custommitaxi_tv_drivertimedistance"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -21,8 +21,8 @@
 
         <ImageView
             android:id="@+id/customtaxidriver_iv_driverphoto"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_margin="10dp"
             android:src="@drawable/ic_launcher" />
 
@@ -37,6 +37,7 @@
                 android:layout_height="0dp"
                 android:gravity="center"
                 android:layout_weight="1"
+                android:textColor="@color/generic_amarillo"
                 android:text="@string/customtaxidriver_tv_drivertype"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -44,6 +45,8 @@
                 android:id="@+id/customtaxidriver_btn_selectdriver"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/selector_btn_generic"
+                android:textColor="@drawable/selector_btn_textcolor"
                 android:text="@string/customtaxidriver_btn_selectdriver" />
 
         </LinearLayout>
@@ -54,20 +57,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin" >
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical" 
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/customtaxidriver_tv_drivername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/generic_amarillo"
                 android:text="@string/customtaxidriver_tv_drivername"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
