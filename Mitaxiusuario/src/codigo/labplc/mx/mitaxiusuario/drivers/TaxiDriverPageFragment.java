@@ -98,7 +98,8 @@ public class TaxiDriverPageFragment extends Fragment {
 				
 		
 				//creamos un viaje en la base de datos
-			String consulta="http://codigo.labplc.mx/~mikesaurio/taxi.php?pk_chofer="+taxiDriver.getPk_chofer()+
+			String consulta="http://codigo.labplc.mx/~mikesaurio/taxi.php?act=viaje&type=add&"+
+			"pk_chofer="+taxiDriver.getPk_chofer()+
 			"&pk_pasajero="+taxiDriver.getPk_usuario()+
 			"&placa="+taxiDriver.getPlaca()+
 			"&origen="+taxiDriver.getOrigen()+
