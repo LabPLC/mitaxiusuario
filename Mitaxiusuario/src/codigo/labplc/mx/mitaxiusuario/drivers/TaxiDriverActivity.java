@@ -144,6 +144,7 @@ public class TaxiDriverActivity extends FragmentActivity {
 					 td.setDiscapacitados(oneObject.getString("discapacitados"));
 					 td.setBicicleta(oneObject.getString("bicicleta"));
 					 td.setMascotas(oneObject.getString("mascotas"));
+					 td.setFoto(oneObject.getString("foto"));
 					 
 				
 				String consulta2 = "http://datos.labplc.mx/~mikesaurio/taxi.php?act=chofer&type=getGoogleData&lato="+slocation[0]+"&lngo="+slocation[1]+"&latd="+ td.getLongitud()+"&lngd="+ td.getLatitud()+"&filtro=velocidad";
@@ -171,7 +172,7 @@ public class TaxiDriverActivity extends FragmentActivity {
 					td.getTipo_taxi(),sdistance[0],sdistance[1],td.getPk_chofer(),td.getPk_usuario(),
 					slocation[0]+","+slocation[1],
 					slocation[0]+","+slocation[1],
-					pasajeros,mascotas,discapacitados,bicicleta));
+					pasajeros,mascotas,discapacitados,bicicleta,td.getFoto()));
 	     
 			
 	      }

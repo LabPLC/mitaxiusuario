@@ -27,6 +27,7 @@ public class TaxiDriver implements Serializable {
 	private boolean mascotas;
 	private boolean discapacitados;
 	private boolean bicicletas;
+	private String foto;
 	
 
 
@@ -36,7 +37,7 @@ public class TaxiDriver implements Serializable {
 			String idValidity, String antiquity, int ranking, String placa,
 			String taxiModelCar, String sInfraccion, String string,String tiempo,
 			String distance,String pk_chofer,String pk_usuario,String origen,String destino,String personas,
-			boolean mascotas, boolean discapacitados, boolean bicicletas) {
+			boolean mascotas, boolean discapacitados, boolean bicicletas,String foto) {
 		super();
 		this.name = name;
 		this.lastName = lastName;
@@ -58,6 +59,15 @@ public class TaxiDriver implements Serializable {
 		this.mascotas=mascotas;
 		this.discapacitados=discapacitados;
 		this.bicicletas=bicicletas;
+		this.foto=foto;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 
 	public String getOrigen() {

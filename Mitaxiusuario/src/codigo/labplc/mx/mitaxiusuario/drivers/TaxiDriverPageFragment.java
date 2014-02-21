@@ -2,6 +2,9 @@ package codigo.labplc.mx.mitaxiusuario.drivers;
 
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -11,8 +14,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
@@ -77,12 +81,13 @@ public class TaxiDriverPageFragment extends Fragment {
 		
 		// Distacia entre el taxista y el usuario
 		TextView tvDrivertimedistance = (TextView) rootView.findViewById(R.id.customtaxidriver_tv_drivertimedistance);
-		tvDrivertimedistance.setText("A " +taxiDriver.getDistance() + " Km  de ti ( "+ taxiDriver.getTiempo()+" min aproximadamente )");
+		tvDrivertimedistance.setText("A " +taxiDriver.getDistance() + " de ti ( "+ taxiDriver.getTiempo()+" aproximadamente )");
 		//tvDrivertimedistance.setText(getString(R.string.custommitaxi_tv_drivertimedistance, String.valueOf(this.index)));
 		
 		// Imagen del taxista
         ImageView ivDriverphoto = (ImageView) rootView.findViewById(R.id.customtaxidriver_iv_driverphoto);
-        ivDriverphoto.setImageResource(R.drawable.ic_launcher);
+        String consulta ="http://codigo.labplc.mx/~mikesaurio/picsDriver/"+taxiDriver.getFoto();
+        ivDriverphoto.setImageBitmap(getBitmapFromURL(consulta));
         
         // Tipo de taxi
         TextView tvDrivertype = (TextView) rootView.findViewById(R.id.customtaxidriver_tv_drivertype);
@@ -178,5 +183,28 @@ public class TaxiDriverPageFragment extends Fragment {
 			Log.d("Error IOException", e.getMessage() + "");
 			return null;
 		}
+	}
+	
+	
+	
+	public static Bitmap getBitmapFromURL(String src) {
+	    try {
+	        Log.e("src",src);
+	        URL url = new URL(src);
+	        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+	        connection.setDoInput(true);
+	        connection.connect();
+	        InputStream input = connection.getInputStream();
+	        Bitmap myBitmap = BitmapFactory.decodeStream(input);
+		    Matrix mat = new Matrix();
+	        mat.postRotate(-90);
+	        Bitmap bMapRotate = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), mat, true);
+	        Log.e("Bitmap","returned");
+	        return bMapRotate;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        Log.e("Exception",e.getMessage());
+	        return null;
+	    }
 	}
 }
