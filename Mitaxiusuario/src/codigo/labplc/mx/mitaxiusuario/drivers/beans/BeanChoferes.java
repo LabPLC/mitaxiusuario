@@ -24,6 +24,15 @@ public class BeanChoferes {
 	private String discapacitados;
 	private String bicicleta;
 	private String mascotas;
+	private String foto;
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
 
 	public String getTipo_taxi() {
 		return tipo_taxi;
@@ -199,6 +208,8 @@ public class BeanChoferes {
 	public void setPk_usuario(String pk_usuario) {
 		this.pk_usuario = pk_usuario;
 	}
+
+	
 
 
 }

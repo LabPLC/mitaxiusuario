@@ -28,14 +28,13 @@ import codigo.labplc.mx.mitaxiusuario.drivers.adapters.TaxiDriverFragmentPagerAd
 import codigo.labplc.mx.mitaxiusuario.drivers.animtrans.ZoomOutPageTransformer;
 import codigo.labplc.mx.mitaxiusuario.drivers.beans.BeanChoferes;
 import codigo.labplc.mx.mitaxiusuario.drivers.beans.TaxiDriver;
-import codigo.labplc.mx.mitaxiusuario.googlemaps.TripPreferencesActivity;
 
 public class TaxiDriverActivity extends FragmentActivity {
 	//private int NUM_PAGES = 0;
 	
 	private ViewPager mPager;
 	private TaxiDriverFragmentPagerAdapter mPagerAdapter;
-	private String location,pasajeros;
+	private String location,locationD,pasajeros;
 	boolean libre,sitio,radio,rosa,discapacitados,bicicleta,mascotas,ingles;
 	private ArrayList<BeanChoferes> beanTaxiDriver = new ArrayList<BeanChoferes>();
 	
@@ -47,6 +46,7 @@ public class TaxiDriverActivity extends FragmentActivity {
 		setContentView(R.layout.activity_mitaxi_taxidriver);
 		 Bundle bundle = getIntent().getExtras();
 		 location =  bundle.getString("location");
+		 locationD = bundle.getString("locationD");
 		 pasajeros =  bundle.getString("pasajeros");
 		 libre =  bundle.getBoolean("libre");
 		 sitio =  bundle.getBoolean("sitio");
@@ -99,8 +99,11 @@ public class TaxiDriverActivity extends FragmentActivity {
 		location  = location.replaceFirst(". ", "@");
 		location  = location.replaceFirst(",", ".");
 		String slocation[] = location.split("@");
+		String slocationD[] = locationD.split(",");
 		
-		Log.d("********************",  slocation[0]+"");
+		
+		
+	
 		
 		String consulta = "http://datos.labplc.mx/~mikesaurio/taxi.php?act=chofer&type=getlogin&pk="+uuid+"&lat="+slocation[0]+"&lng="+slocation[1]+"&discapacitados="+discapacitados+"&bicicleta="+bicicleta+"&mascotas="+mascotas+"&libre="+libre+"&sitio="+sitio+"&radio="+radio+"&rosa="+rosa;
 		//Log.d("********************", consulta+"");
@@ -144,6 +147,7 @@ public class TaxiDriverActivity extends FragmentActivity {
 					 td.setDiscapacitados(oneObject.getString("discapacitados"));
 					 td.setBicicleta(oneObject.getString("bicicleta"));
 					 td.setMascotas(oneObject.getString("mascotas"));
+					 td.setFoto(oneObject.getString("foto"));
 					 
 				
 				String consulta2 = "http://datos.labplc.mx/~mikesaurio/taxi.php?act=chofer&type=getGoogleData&lato="+slocation[0]+"&lngo="+slocation[1]+"&latd="+ td.getLongitud()+"&lngd="+ td.getLatitud()+"&filtro=velocidad";
@@ -170,8 +174,8 @@ public class TaxiDriverActivity extends FragmentActivity {
 					td.getPlaca(),td.getMarca()+" "+td.getSubmarca()+" " + td.getAnio(),infracciones+"",
 					td.getTipo_taxi(),sdistance[0],sdistance[1],td.getPk_chofer(),td.getPk_usuario(),
 					slocation[0]+","+slocation[1],
-					slocation[0]+","+slocation[1],
-					pasajeros,mascotas,discapacitados,bicicleta));
+					slocationD[0]+","+slocationD[1],
+					pasajeros,mascotas,discapacitados,bicicleta,td.getFoto()));
 	     
 			
 	      }

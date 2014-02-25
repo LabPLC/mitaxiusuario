@@ -94,6 +94,21 @@
              android:theme="@android:style/Theme.Holo.NoActionBar"
             android:windowSoftInputMode="adjustPan" >
         </activity>
+        
+         
+                 <activity
+            android:name="codigo.labplc.mx.mitaxi.trip.MitaxiTripActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="codigo.labplc.mx.mitaxi.trip.LocationActivity"
+            android:label="@string/app_name" >
+        </activity>
+
+        <service android:name="codigo.labplc.mx.mitaxi.trip.TaxiRouteService" >
+        </service>
+         
     </application>
 
 </manifest>

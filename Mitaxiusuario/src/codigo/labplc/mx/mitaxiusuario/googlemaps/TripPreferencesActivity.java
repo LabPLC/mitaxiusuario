@@ -3,7 +3,6 @@ package codigo.labplc.mx.mitaxiusuario.googlemaps;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;

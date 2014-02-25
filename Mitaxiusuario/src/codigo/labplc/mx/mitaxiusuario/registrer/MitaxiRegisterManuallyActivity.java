@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import codigo.labplc.mx.mitaxiusuario.MitaxiActivity;
 import codigo.labplc.mx.mitaxiusuario.R;
-import codigo.labplc.mx.mitaxiusuario.googlemaps.MitaxiGoogleMapsActivity;
 import codigo.labplc.mx.mitaxiusuario.registrer.beans.User;
 import codigo.labplc.mx.mitaxiusuario.registrer.daos.FactoryDAO;
 import codigo.labplc.mx.mitaxiusuario.registrer.daos.UserDAO;
