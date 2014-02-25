@@ -1,8 +1,22 @@
 package codigo.labplc.mx.mitaxiusuario.googlemaps;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.ParseException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -21,6 +35,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.StrictMode;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -918,26 +933,109 @@ OnItemClickListener {
 				(new MitaxiGoogleMapsActivity.GetAddressTask(this)).execute(getLocation());
 	            return true;
 	        case R.id.action_mas:
-
-	        	Intent intent = new Intent(MitaxiGoogleMapsActivity.this,TaxiDriverActivity.class);
-	        	intent.putExtra("location", location);
-	        //	actvDestination
-	        	intent.putExtra("pasajeros", TripPreferencesActivity.PASAJEROS);
-	        	intent.putExtra("libre", TripPreferencesActivity.libre);
-	        	intent.putExtra("sitio", TripPreferencesActivity.sitio);
-	        	intent.putExtra("radio", TripPreferencesActivity.radio);
-	        	intent.putExtra("rosa", TripPreferencesActivity.rosa);
-	        	intent.putExtra("discapacitados", TripPreferencesActivity.discapacitados);
-	        	intent.putExtra("bicicleta", TripPreferencesActivity.bicicleta);
-	        	intent.putExtra("mascotas", TripPreferencesActivity.mascotas);
-	        	intent.putExtra("ingles", TripPreferencesActivity.ingles);
-	        	startActivity(intent);
+	            if(!actvDestination.getText().equals("")){
+	            	//obtenemos las coordenadas
+	            	String destino = actvDestination.getText().toString();
+	            	destino = destino.replaceAll(" ", "+");
+	            	String consulta = "http://maps.googleapis.com/maps/api/geocode/json?address="+destino+"&sensor=true";
+					String querty = doHttpConnection(consulta);
+					ArrayList<InfoPoint> InfoPoint;
+					InfoPoint = parsePoints(querty);
+					//Log.d("*************lat",InfoPoint.get(0).getDblLatitude()+"..");
+					//Log.d("*************lng",InfoPoint.get(0).getDblLongitude()+"..");
+					
+	            	
+			        	Intent intent = new Intent(MitaxiGoogleMapsActivity.this,TaxiDriverActivity.class);
+			        	intent.putExtra("location", location);
+			        	intent.putExtra("locationD",InfoPoint.get(0).getDblLatitude()+","+InfoPoint.get(0).getDblLongitude());
+			        	intent.putExtra("pasajeros", TripPreferencesActivity.PASAJEROS);
+			        	intent.putExtra("libre", TripPreferencesActivity.libre);
+			        	intent.putExtra("sitio", TripPreferencesActivity.sitio);
+			        	intent.putExtra("radio", TripPreferencesActivity.radio);
+			        	intent.putExtra("rosa", TripPreferencesActivity.rosa);
+			        	intent.putExtra("discapacitados", TripPreferencesActivity.discapacitados);
+			        	intent.putExtra("bicicleta", TripPreferencesActivity.bicicleta);
+			        	intent.putExtra("mascotas", TripPreferencesActivity.mascotas);
+			        	intent.putExtra("ingles", TripPreferencesActivity.ingles);
+			        	startActivity(intent);
+	            }else{
+	            	Toast.makeText(getApplicationContext(), "Ingresa una direcci—n valida", Toast.LENGTH_LONG).show();
+	            }
 	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
 
+	/**
+	 * metodo que hace la conexion al servidor con una url especifica
+	 * @param url(String) ruta del web service
+	 * @return (String) resultado del service
+	 */
+	public static String doHttpConnection(String url) {
+		HttpClient Client = new DefaultHttpClient();
+		try {
+			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+					.permitAll().build();
+			StrictMode.setThreadPolicy(policy);
+			HttpGet httpget = new HttpGet(url);
+			HttpResponse hhrpResponse = Client.execute(httpget);
+			HttpEntity httpentiti = hhrpResponse.getEntity();
+			//Log.d("RETURN HTTPCLIENT", EntityUtils.toString(httpentiti));
+			return EntityUtils.toString(httpentiti);
+		} catch (ParseException e) {
+			Log.d("Error ParseEception", e.getMessage() + "");
+			return null;
+		} catch (IOException e) {
+			Log.d("Error IOException", e.getMessage() + "");
+			return null;
+		}
+	}
 	
 	
+	private ArrayList<InfoPoint> parsePoints(String strResponse) {
+        // TODO Auto-generated method stub
+        ArrayList<InfoPoint> result=new ArrayList<InfoPoint>();
+        try {
+            JSONObject obj=new JSONObject(strResponse);
+            JSONArray array=obj.getJSONArray("results");
+            for(int i=0;i<array.length();i++)
+            {
+                            InfoPoint point=new InfoPoint();
+
+                JSONObject item=array.getJSONObject(i);
+                ArrayList<HashMap<String, Object>> tblPoints=new ArrayList<HashMap<String,Object>>();
+                JSONArray jsonTblPoints=item.getJSONArray("address_components");
+                for(int j=0;j<jsonTblPoints.length();j++)
+                {
+                    JSONObject jsonTblPoint=jsonTblPoints.getJSONObject(j);
+                    HashMap<String, Object> tblPoint=new HashMap<String, Object>();
+                    Iterator<String> keys=jsonTblPoint.keys();
+                    while(keys.hasNext())
+                    {
+                        String key=(String) keys.next();
+                        if(tblPoint.get(key) instanceof JSONArray)
+                        {
+                            tblPoint.put(key, jsonTblPoint.getJSONArray(key));
+                        }
+                        tblPoint.put(key, jsonTblPoint.getString(key));
+                    }
+                    tblPoints.add(tblPoint);
+                }
+                point.setAddressFields(tblPoints);
+                point.setStrFormattedAddress(item.getString("formatted_address"));
+                JSONObject geoJson=item.getJSONObject("geometry");
+                JSONObject locJson=geoJson.getJSONObject("location");
+                point.setDblLatitude(Double.parseDouble(locJson.getString("lat")));
+                point.setDblLongitude(Double.parseDouble(locJson.getString("lng")));
+
+                result.add(point);
+            }
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 }

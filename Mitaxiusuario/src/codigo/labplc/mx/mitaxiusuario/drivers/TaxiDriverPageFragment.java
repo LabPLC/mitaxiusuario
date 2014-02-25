@@ -1,10 +1,14 @@
 package codigo.labplc.mx.mitaxiusuario.drivers;
 
 
+import io.socket.SocketIO;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -13,6 +17,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,6 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import codigo.labplc.mx.mitaxiusuario.R;
 import codigo.labplc.mx.mitaxiusuario.drivers.beans.TaxiDriver;
+import codigo.labplc.mx.mitaxiusuario.tracking.SocketConnection;
 
 public class TaxiDriverPageFragment extends Fragment {
 	private static final String TAXIDRIVER_KEY = "taxidriver";
@@ -39,6 +46,8 @@ public class TaxiDriverPageFragment extends Fragment {
 	
 	private TaxiDriver taxiDriver;
 	private int index;
+	SocketIO socket;//socket para la conección con el servidor
+	JSONObject cadena;
 	
 	/**
 	 * Crea una nueva instancia de un {@link TaxiDriverPageFragment} con un index y un objeto {@link TaxiDriver} en específico
@@ -115,7 +124,38 @@ public class TaxiDriverPageFragment extends Fragment {
 			"&bicicleta="+taxiDriver.getBicicletas();
 			Log.d("******************", consulta+"");
 			String querty = doHttpConnection(consulta);
-			Toast.makeText(rootView.getContext(), querty+"", Toast.LENGTH_LONG).show();
+			
+			
+			JSONObject jObj;
+			String uuidViaje="";
+			try {
+				jObj = new JSONObject(querty);
+				uuidViaje = jObj.getString("pk_viaje");
+				Toast.makeText(rootView.getContext(), uuidViaje+"..", Toast.LENGTH_LONG).show();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			socket=new SocketConnection(rootView.getContext()).connection();
+			
+			
+			cadena = new JSONObject(); // Creamos un objeto de tipo JSON
+			try {
+				// Le asignamos los datos que necesitemos
+				cadena.put("uuiduser", taxiDriver.getPk_usuario()); //latitud
+				cadena.put("uuidtravel", uuidViaje);//longitud
+				Log.d("*********uuidtravel", uuidViaje+"");
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			//generamos la conexión con el servidor y mandamos las coordenads
+			
+			 MyTimerTask myTask = new MyTimerTask();
+		     Timer myTimer = new Timer();
+			 myTimer.schedule(myTask, 0, 3500);  
+			
 			
 				//cambiamos el estatus para que el chofer se decuenta 
 			consulta ="http://codigo.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=updateStatusChofer&pk="+taxiDriver.getPk_chofer()+"&status=pendiente";
@@ -207,4 +247,12 @@ public class TaxiDriverPageFragment extends Fragment {
 	        return null;
 	    }
 	}
+	
+	class MyTimerTask extends TimerTask {
+		  public void run() {
+			  // ERROR
+			  socket.emit("update", cadena);
+		    System.out.println("update...}}{}");
+		  }
+		}
 }
