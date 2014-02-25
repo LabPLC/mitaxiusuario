@@ -169,9 +169,9 @@
     <string name="mitaxi_trip_tv_drivertaxiid">Placas: %1$s</string>
     <string name="mitaxi_trip_tv_drivertaximodel">Auto: %1$s</string>
     <string name="mitaxi_trip_tv_drivernuminfraction">Infracciones: %1$s</string>
-    <string name="mitaxi_trip_tv_wrongdriver">¿No es el chofer? Da click aquí.</string>
+    <string name="mitaxi_trip_tv_wrongdriver">¿No es el chofer?</string>
     
-    <string name="mitaxi_trip_btn_starttrip">Iniciar viaje.</string>
+    <string name="mitaxi_trip_btn_starttrip">Llegó taxi</string>
     
     <!-- Messages -->
     <string name="connected">Client connected</string>

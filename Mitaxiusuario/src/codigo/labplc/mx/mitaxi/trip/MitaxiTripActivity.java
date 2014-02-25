@@ -205,8 +205,8 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
         TextView tvDrivertaximodel = (TextView) findViewById(R.id.mitaxi_trip_tv_drivertaximodel);
         tvDrivertaximodel.setText(getString(R.string.mitaxi_trip_tv_drivertaximodel, taxiDriver.getTaxiModelCar()));
       
-        TextView tvDrivertaxitipo = (TextView) findViewById(R.id.mitaxi_trip_tv_drivertaxitipo);
-        tvDrivertaxiplaca.setText("Tipo: "+taxiDriver.getTipo());
+       /* TextView tvDrivertaxitipo = (TextView) findViewById(R.id.mitaxi_trip_tv_drivertaxitipo);
+        tvDrivertaxiplaca.setText("Tipo: "+taxiDriver.getTipo());*/
        
 
 		
@@ -226,7 +226,7 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
                 dialog.show();
             }
         };
-        spannableString.setSpan(span, 27, 31, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        spannableString.setSpan(span, 0, 17, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         tvWrongDriver.setText(spannableString);
         
         // Driver position button

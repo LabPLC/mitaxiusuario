@@ -100,7 +100,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="80dp"
         android:layout_marginTop="150dp"
         android:content="@+id/content"
         android:handle="@+id/handle"
@@ -108,7 +107,7 @@
 
         <ImageView
             android:id="@+id/handle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
             android:src="@drawable/tab_open" />
@@ -122,7 +121,8 @@
 
             <include
                 android:id="@+id/include_activity_mitaxi_trippreferences"
-                layout="@layout/activity_mitaxi_trippreferences" />
+                layout="@layout/activity_mitaxi_trippreferences"
+                android:layout_width="match_parent" />
         </LinearLayout>
     </SlidingDrawer>
 
