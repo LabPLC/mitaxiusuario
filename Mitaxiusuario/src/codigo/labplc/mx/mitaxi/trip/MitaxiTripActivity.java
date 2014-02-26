@@ -49,6 +49,7 @@ import codigo.labplc.mx.mitaxi.trip.location.LocationUtils;
 import codigo.labplc.mx.mitaxiusuario.R;
 import codigo.labplc.mx.mitaxiusuario.drivers.TaxiDriverActivity;
 import codigo.labplc.mx.mitaxiusuario.drivers.beans.BeanChoferes;
+import codigo.labplc.mx.mitaxiusuario.registrer.dialogues.Dialogos;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -56,6 +57,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 /**
@@ -68,7 +70,7 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 
 	private ArrayList<LatLng> listTaxiRoute = new ArrayList<LatLng>();
 	
-	private LatLng userPosition = null;
+	private LatLng userPosition = null,userPositionDestino=null;
 	private LatLng taxiPosition = null;
 
 	private GMapV2Direction googleMapsDirections = new GMapV2Direction();
@@ -80,6 +82,8 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 	private String origen="";
 	private String destino;
 	private String nombre,appat,apmat,marca,submarca,anio,foto,tipo;
+	private String tiempo= "0",distancia="0";
+	private String titulo ="Mi ubicaci—n";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +104,7 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 		Log.d("pk_chofer", pk_chofer);
 		Log.d("placa", placa);
 		Log.d("origen", origen);
-		Log.d("origen", origen);
+		Log.d("destino", destino);
 		
 		//traemos las direcciones, distancia y tiempo
 				placa = placa.replaceAll(" ", "");
@@ -110,13 +114,14 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 				
 				destino  = destino.replaceAll("[()]", "");
 				String sdestino[] = destino.split(",");
+				
 				userPosition = new LatLng(Double.parseDouble(sorigen[0]),Double.parseDouble(sorigen[1]));
+				userPositionDestino = new LatLng(Double.parseDouble(sdestino[0]),Double.parseDouble(sdestino[1]));
 		
 				String consulta ="http://datos.labplc.mx/~mikesaurio/taxi.php?act=chofer&type=getchoferloginpk&pk_chofer="+pk_chofer+"&placa="+placa;
-				Log.d("********************", consulta+"");
 				
 				String querty = doHttpConnection(consulta);
-			   
+			    
 			try{
 				  JSONObject json= (JSONObject) new JSONTokener(querty).nextValue();
 			      JSONObject json2 = json.getJSONObject("message");
@@ -139,7 +144,6 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 			        submarca =	oneObject.getString("submarca");
 			        anio = 	oneObject.getString("anio");
 			      }
-		Log.d("*********FOTO", foto+"...");
 		
 		taxiDriver = new TaxiDriver(nombre,appat+" "+apmat,foto,placa,marca+" "+submarca+" "+anio,tipo);
 			}catch(Exception e){
@@ -177,6 +181,8 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 
 					map.clear();
 
+					
+					
 					drawRouteBetweenTwoPositions(latLng, userPosition);
 				}
 			}
@@ -205,8 +211,8 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
         TextView tvDrivertaximodel = (TextView) findViewById(R.id.mitaxi_trip_tv_drivertaximodel);
         tvDrivertaximodel.setText(getString(R.string.mitaxi_trip_tv_drivertaximodel, taxiDriver.getTaxiModelCar()));
       
-        TextView tvDrivertaxitipo = (TextView) findViewById(R.id.mitaxi_trip_tv_drivertaxitipo);
-        tvDrivertaxiplaca.setText("Tipo: "+taxiDriver.getTipo());
+       /* TextView tvDrivertaxitipo = (TextView) findViewById(R.id.mitaxi_trip_tv_drivertaxitipo);
+        tvDrivertaxiplaca.setText("Tipo: "+taxiDriver.getTipo());*/
        
 
 		
@@ -219,14 +225,10 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
         ClickableSpan span = new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-            	AlertDialog.Builder builder = new AlertDialog.Builder(MitaxiTripActivity.this);
-            	builder.setTitle("Dialogo chofer incorrecto");
-                builder.setMessage("BLABLABLABLA");
-                AlertDialog dialog = builder.create();            
-                dialog.show();
+            	new Dialogos().mostrarReportaTaxi(MitaxiTripActivity.this).show();
             }
         };
-        spannableString.setSpan(span, 27, 31, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        spannableString.setSpan(span, 0, 17, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         tvWrongDriver.setText(spannableString);
         
         // Driver position button
@@ -278,7 +280,8 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 	 * @param latLng
 	 */
 	public void addMarkerIntoMap(String time, LatLng latLng) {
-		LocationUtils.addMarker(map, latLng, "Taxi", false, "Llego aprox. en: " + time,
+		
+		LocationUtils.addMarker(map, latLng, "Taxi", false, "A: " + distancia+" aproximadamente: " + tiempo+ " de ti",
 				BitmapDescriptorFactory.fromResource(R.drawable.mi_taxi_assets_taxi_on));
 
 		this.taxiPosition = latLng;
@@ -293,6 +296,18 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 	 * @param endPosition
 	 */
 	public void drawRouteBetweenTwoPositions(LatLng startPosition, LatLng endPosition) {
+		String consulta2 = "http://datos.labplc.mx/~mikesaurio/taxi.php?act=chofer&type=getGoogleData&lato="
+				+startPosition.latitude+"&lngo="+startPosition.longitude
+				+"&latd="+endPosition.latitude+"&lngd="+endPosition.longitude+"&filtro=velocidad";
+		String querty2 = doHttpConnection(consulta2);
+		querty2= querty2.replaceAll("\"","");
+		String[] Squerty2 = querty2.split(",");
+		tiempo = Squerty2[0];
+		distancia =Squerty2[1];
+		
+		MarkerOptions marker = new MarkerOptions().position(endPosition).title(titulo);
+		marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+		map.addMarker(marker);
 		googleMapsDirections.getDocument(this, startPosition, endPosition, GMapV2Direction.MODE_DRIVING);
 	}
 
@@ -312,11 +327,15 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 		map.addPolyline(rectLine);
 	}
 
+	
+	
+	
 	/**
 	 * Start the service to obtain the last taxi driver locations
 	 */
 	public void startService() {
 		Intent intent = new Intent(getBaseContext(), TaxiRouteService.class);
+		intent.putExtra("pk_chofer", pk_chofer);
 		startService(intent);
 	}
 
@@ -385,7 +404,12 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 				
 				
 			case R.id.mitaxi_trip_btn_starttrip:
-				Dialogues.Toast(getApplicationContext(), "Here starts the Trip", Toast.LENGTH_SHORT);
+				titulo = "Mi destino";
+				drawRouteBetweenTwoPositions(userPosition, userPositionDestino);
+				userPosition = userPositionDestino;
+			//	Dialogues.Toast(getApplicationContext(), "Here starts the Trip", Toast.LENGTH_SHORT);
+				
+				
 				break;
 		}
 	}

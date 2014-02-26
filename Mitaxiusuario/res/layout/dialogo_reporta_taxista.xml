@@ -40,9 +40,11 @@
             android:padding="10dp" >
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="¿Son las placas?" />
+                android:gravity="center"
+                android:text="¿Qué esta mal?" 
+                android:textColor="@android:color/white"/>
 
             <RadioGroup
                 android:id="@+id/radioSonPlacas"
@@ -54,13 +56,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="Sí" />
+                       android:textColor="@android:color/white"
+                    android:text="Placas" />
 
                 <RadioButton
                     android:id="@+id/radioSonPlacasNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No" />
+                       android:textColor="@android:color/white"
+                    android:text="Chofer" />
             </RadioGroup>
 
             <View
@@ -70,7 +74,7 @@
                 android:layout_marginTop="10dp"
                 android:background="#000" />
 
-            <TextView
+            <!-- <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¿Es el chofer?" />
@@ -92,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No" />
-            </RadioGroup>
+            </RadioGroup> -->
         </LinearLayout>
 
         <LinearLayout
