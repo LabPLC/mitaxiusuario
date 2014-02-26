@@ -7,6 +7,9 @@ import android.app.Dialog;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 import codigo.labplc.mx.mitaxiusuario.R;
 
 /**
@@ -93,43 +96,40 @@ public class Dialogos {
         return customDialog;//regresamos el di‡logo
     }   
 	
-	*//**
+	/**
 	 * Dialogo para que el usuario reporte una anomalia en el taxi o el chofer
 	 *
 	 * @param Activity (actividad que llama al di‡logo)
 	 * @return Dialog (regresa el dialogo creado)
-	 **//*
+	 **/
 	public Dialog mostrarReportaTaxi(final Activity activity)
     {
-		customDialog= null;//hacemos null el dialogo
-        customDialog = new Dialog(activity,android.R.style.Theme_Light);//instanciamos el dialogo y le damos estilo
-        customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);//deshabilitamos el titulo
-        customDialog.setCancelable(false);//obligamos al usuario a pulsar el boton para cerrarlo
-        customDialog.setContentView(R.layout.dialogo_reporta_taxista);//establecemos el contenido de nuestro dialog
-        final RadioGroup radioSonPlacas = (RadioGroup) customDialog.findViewById(R.id.radioSonPlacas);//radioGroup  placas correctas
-        final RadioGroup radioEsChofer = (RadioGroup) customDialog.findViewById(R.id.radioEsChofer);//radioGroup chofer correcto
-        
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+	    View view = activity.getLayoutInflater().inflate(R.layout.dialogo_reporta_taxista, null);
+	    builder.setView(view);
+	    builder.setCancelable(false);
+		
+		
+        final RadioGroup radioSonPlacas = (RadioGroup) view.findViewById(R.id.radioSonPlacas);//radioGroup  placas correctas
         
         //escucha del boton aceptar
-        ((Button) customDialog.findViewById(R.id.dialogo_reporta_taxista_btnAceptar)).setOnClickListener(new OnClickListener() {
+        ((Button) view.findViewById(R.id.dialogo_reporta_taxista_btnAceptar)).setOnClickListener(new OnClickListener() {
              
             @Override
             public void onClick(View view)
             {
             	int selectedPlaca = radioSonPlacas.getCheckedRadioButtonId();//obtenemos el id del radio seleccionado
-            	RadioButton radioSonPlaca = (RadioButton) customDialog.findViewById(selectedPlaca);//hacemos la instancia de este
+            	RadioButton radioSonPlaca = (RadioButton) view.findViewById(selectedPlaca);//hacemos la instancia de este
             	
-            	int selectedChofer = radioEsChofer.getCheckedRadioButtonId();//obtenemos el id del radio seleccionado
-            	RadioButton radioEsChofer = (RadioButton) customDialog.findViewById(selectedChofer);//hacemos la instancia de este
-            	
-            	Toast.makeText(activity,radioSonPlaca.getText()+" , " + radioEsChofer.getText(), Toast.LENGTH_SHORT).show();
+            	Toast.makeText(activity,radioSonPlaca.getText(), Toast.LENGTH_SHORT).show();
+            	//enviar  reporte a WS
          
-                customDialog.dismiss();  //cerramos el di‡logo  
+            	customDialog.dismiss();  //cerramos el di‡logo  
             }
         });
             
           //escucha del boton cancelar
-            ((Button) customDialog.findViewById(R.id.dialogo_reporta_taxista_btnCancelar)).setOnClickListener(new OnClickListener() {
+            ((Button) view.findViewById(R.id.dialogo_reporta_taxista_btnCancelar)).setOnClickListener(new OnClickListener() {
                  
                 @Override
                 public void onClick(View view)
@@ -138,12 +138,12 @@ public class Dialogos {
                 }
             
         });
-        return customDialog;//regresamos el di‡logo
+          return (customDialog=builder.create());//regresamos el di‡logo;//regresamos el di‡logo
     }   
 	
 	
 	
-	*//**
+	/**
 	 * Dialogo para que el usuario ranke el servicio
 	 *
 	 * @param Activity (actividad que llama al di‡logo)

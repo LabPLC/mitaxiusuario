@@ -64,6 +64,7 @@
                 <codigo.labplc.mx.mitaxiusuario.googlemaps.groups.MyViewGroup
                     android:id="@+id/trippreferences_vg_taxitype"
                     android:layout_width="match_parent"
+                    android:gravity="center"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
@@ -86,6 +87,7 @@
                 <codigo.labplc.mx.mitaxiusuario.googlemaps.groups.MyViewGroup
                     android:id="@+id/trippreferences_vg_taxispecial"
                     android:layout_width="match_parent"
+                     android:gravity="center"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
@@ -108,6 +110,7 @@
                 <codigo.labplc.mx.mitaxiusuario.googlemaps.groups.MyViewGroup
                     android:id="@+id/trippreferences_vg_passengers"
                     android:layout_width="match_parent"
+                     android:gravity="center"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 

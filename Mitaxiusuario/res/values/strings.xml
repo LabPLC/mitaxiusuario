@@ -171,7 +171,7 @@
     <string name="mitaxi_trip_tv_drivernuminfraction">Infracciones: %1$s</string>
     <string name="mitaxi_trip_tv_wrongdriver">¿No es el chofer?</string>
     
-    <string name="mitaxi_trip_btn_starttrip">Llegó taxi</string>
+    <string name="mitaxi_trip_btn_starttrip">Llegó mi taxi</string>
     
     <!-- Messages -->
     <string name="connected">Client connected</string>

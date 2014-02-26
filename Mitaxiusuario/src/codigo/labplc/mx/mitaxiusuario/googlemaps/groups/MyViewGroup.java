@@ -48,6 +48,7 @@ public class MyViewGroup extends LinearLayout {
 		
 		llContainer = new LinearLayout(getContext());
 		llContainer.setOrientation(LinearLayout.HORIZONTAL);
+		llContainer.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		
 		hsv.addView(llContainer);
 		
@@ -56,10 +57,11 @@ public class MyViewGroup extends LinearLayout {
 	
 	private ViewGroup initVerticalUI() {
 		HorizontalScrollView vsv = new HorizontalScrollView(getContext());
-		vsv.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		vsv.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		
 		llContainer = new LinearLayout(getContext());
 		llContainer.setOrientation(LinearLayout.VERTICAL);
+		llContainer.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		
 		vsv.addView(llContainer);
 		
