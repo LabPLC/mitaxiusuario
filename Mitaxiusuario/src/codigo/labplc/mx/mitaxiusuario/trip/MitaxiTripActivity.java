@@ -1,4 +1,4 @@
-package codigo.labplc.mx.mitaxi.trip;
+package codigo.labplc.mx.mitaxiusuario.trip;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,38 +18,42 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.w3c.dom.Document;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.os.StrictMode;
+import android.telephony.gsm.SmsManager;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import codigo.labplc.mx.mitaxi.trip.beans.TaxiDriver;
-import codigo.labplc.mx.mitaxi.trip.dialogues.Dialogues;
-import codigo.labplc.mx.mitaxi.trip.location.AnimationFactory;
-import codigo.labplc.mx.mitaxi.trip.location.GMapV2Direction;
-import codigo.labplc.mx.mitaxi.trip.location.LocationUtils;
 import codigo.labplc.mx.mitaxiusuario.R;
-import codigo.labplc.mx.mitaxiusuario.drivers.TaxiDriverActivity;
-import codigo.labplc.mx.mitaxiusuario.drivers.beans.BeanChoferes;
+import codigo.labplc.mx.mitaxiusuario.panicbutton.OpenHelp;
 import codigo.labplc.mx.mitaxiusuario.registrer.dialogues.Dialogos;
+import codigo.labplc.mx.mitaxiusuario.trip.beans.TaxiDriver;
+import codigo.labplc.mx.mitaxiusuario.trip.dialogues.Dialogues;
+import codigo.labplc.mx.mitaxiusuario.trip.location.AnimationFactory;
+import codigo.labplc.mx.mitaxiusuario.trip.location.GMapV2Direction;
+import codigo.labplc.mx.mitaxiusuario.trip.location.LocationUtils;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -84,6 +88,12 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 	private String nombre,appat,apmat,marca,submarca,anio,foto,tipo;
 	private String tiempo= "0",distancia="0";
 	private String titulo ="Mi ubicación";
+	private boolean flagLlegoTaxi= false;
+	Intent intentServicePanic;
+	private LatLng latLng;
+	
+	
+	 MyResultReceiver resultReceiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +109,12 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 		origen = bundle.getString("origen");
 		destino = bundle.getString("destino");
 		
+		
+		resultReceiver = new MyResultReceiver(null);
+		 
+		intentServicePanic= new Intent(this, OpenHelp.class);
+		intentServicePanic.putExtra("receiver", resultReceiver);
+		startService(intentServicePanic);
 		
 		Log.d("pk_viaje", pk_viaje);
 		Log.d("pk_chofer", pk_chofer);
@@ -127,7 +143,6 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 			      JSONObject json2 = json.getJSONObject("message");
 			      JSONObject jsonResponse = new JSONObject(json2.toString());
 			      JSONArray cast = jsonResponse.getJSONArray("chofer");
-			    //  Log.d("********************", cast.length()+"");
 			      if(cast.length()<=0){
 				    	 Toast.makeText(getBaseContext(), "No existen choferes con esas caracteristicas por ahora", Toast.LENGTH_LONG).show(); 
 			      }
@@ -149,6 +164,8 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 			}catch(Exception e){
 				
 			}
+			
+
 		
 		this.initUI();
 	}
@@ -177,12 +194,9 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 				listTaxiRoute = (ArrayList<LatLng>) bundle.getSerializable(TaxiRouteService.ID_LIST_TAXI_ROUTE);
 
 				if (listTaxiRoute != null && listTaxiRoute.size() > 0) {
-					LatLng latLng = listTaxiRoute.get(listTaxiRoute.size() - 1);
+					latLng = listTaxiRoute.get(listTaxiRoute.size() - 1);
 
 					map.clear();
-
-					
-					
 					drawRouteBetweenTwoPositions(latLng, userPosition);
 				}
 			}
@@ -235,8 +249,26 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
         findViewById(R.id.mitaxi_trip_btn_driverPosition).setOnClickListener(this);
         
         // Start Trip button
-        findViewById(R.id.mitaxi_trip_btn_starttrip).setOnClickListener(this);
-        
+    final   Button mitaxi_trip_btn_starttrip =(Button) findViewById(R.id.mitaxi_trip_btn_starttrip); //.setOnClickListener(this);
+       mitaxi_trip_btn_starttrip.setOnClickListener(new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			if(!flagLlegoTaxi){
+					flagLlegoTaxi = true;
+					mitaxi_trip_btn_starttrip.setText("Llegué al destino");
+					titulo = "Mi destino";
+					drawRouteBetweenTwoPositions(userPosition, userPositionDestino);
+					userPosition = userPositionDestino;
+			}else{
+				stopService(intentServicePanic);
+				new Dialogos().mostrarEvaluarServicio(MitaxiTripActivity.this,pk_chofer,pk_viaje).show();
+			}
+		}
+	}); 
+       
+       
+       
 		setUpMapIfNeeded();
 	}
 
@@ -281,7 +313,7 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 	 */
 	public void addMarkerIntoMap(String time, LatLng latLng) {
 		
-		LocationUtils.addMarker(map, latLng, "Taxi", false, "A: " + distancia+" aproximadamente: " + tiempo+ " de ti",
+		LocationUtils.addMarker(map, latLng, "Taxi", false, "A: " + distancia+" aproximadamente: " + tiempo,
 				BitmapDescriptorFactory.fromResource(R.drawable.mi_taxi_assets_taxi_on));
 
 		this.taxiPosition = latLng;
@@ -393,7 +425,25 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 		if(findViewById(R.id.mitaxi_trip_ll_driverinfo).getVisibility() == View.VISIBLE)
 			AnimationFactory.fadeOut(this, findViewById(R.id.mitaxi_trip_ll_driverinfo));
 	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.mitaxi_trip, menu);
+		return true;
+	}
+
 	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case R.id.mitaxi_trip_action_settings:
+	        	new Dialogos().mostrarCostosTaxi(MitaxiTripActivity.this).show();  	
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+
 	
 	@Override
 	public void onClick(View view) {
@@ -402,15 +452,12 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 				map.animateCamera(CameraUpdateFactory.newLatLngZoom(taxiPosition, map.getMaxZoomLevel() - 5));
 				break;
 				
-				
+			/*	
 			case R.id.mitaxi_trip_btn_starttrip:
 				titulo = "Mi destino";
 				drawRouteBetweenTwoPositions(userPosition, userPositionDestino);
 				userPosition = userPositionDestino;
-			//	Dialogues.Toast(getApplicationContext(), "Here starts the Trip", Toast.LENGTH_SHORT);
-				
-				
-				break;
+				break;*/
 		}
 	}
 	
@@ -459,5 +506,32 @@ public class MitaxiTripActivity extends LocationActivity implements OnClickListe
 	        return null;
 	    }
 	}
+	
+
+	class MyResultReceiver extends ResultReceiver
+	 {
+	  public MyResultReceiver(Handler handler) {
+	   super(handler);
+	  }
+
+	  @Override
+	  protected void onReceiveResult(int resultCode, Bundle resultData) {
+		  
+			SharedPreferences prefs = getSharedPreferences("MisPreferenciasPasajero",Context.MODE_PRIVATE);
+			String emer = prefs.getString("emer", null);
+			String mensaje =  "Me encuentro en peligro en el taxi "+placa +
+		  			" chofer " +nombre+" "+appat+" "+apmat+" ubicación: "+latLng+" bateria: "+resultData.getString("panic")+"";
+		  	Log.d("********mensaje", mensaje+"");
+		  	 sendSMS(emer, mensaje);
+	  }
+	  
+	//---sends an SMS message to another device---
+
+	   private void sendSMS(String phoneNumber, String message)
+	   {
+	       SmsManager sms = SmsManager.getDefault();
+	       sms.sendTextMessage(phoneNumber, null, message, null, null);
+	    }
+	 }
 	
 }

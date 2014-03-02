@@ -34,7 +34,7 @@ public class TaxiDriverActivity extends FragmentActivity {
 	
 	private ViewPager mPager;
 	private TaxiDriverFragmentPagerAdapter mPagerAdapter;
-	private String location,locationD,pasajeros;
+	private String location,locationD,pasajeros,referencia;
 	boolean libre,sitio,radio,rosa,discapacitados,bicicleta,mascotas,ingles;
 	private ArrayList<BeanChoferes> beanTaxiDriver = new ArrayList<BeanChoferes>();
 	
@@ -56,6 +56,7 @@ public class TaxiDriverActivity extends FragmentActivity {
 		 bicicleta =  bundle.getBoolean("bicicleta");
 		 mascotas =  bundle.getBoolean("mascotas");
 		 ingles =  bundle.getBoolean("ingles");
+		 referencia = bundle.getString("referencia");
 		 
 		initUI();
 	}
@@ -94,7 +95,6 @@ public class TaxiDriverActivity extends FragmentActivity {
 		SharedPreferences prefs = getSharedPreferences("MisPreferenciasPasajero",Context.MODE_PRIVATE);
 		String uuid = prefs.getString("uuid", null);
 		//arreglamos las coordenadas
-		Log.d("********************",  location+"");
 		location  = location.replaceFirst(",", ".");
 		location  = location.replaceFirst(". ", "@");
 		location  = location.replaceFirst(",", ".");
@@ -175,7 +175,7 @@ public class TaxiDriverActivity extends FragmentActivity {
 					td.getTipo_taxi(),sdistance[0],sdistance[1],td.getPk_chofer(),td.getPk_usuario(),
 					slocation[0]+","+slocation[1],
 					slocationD[0]+","+slocationD[1],
-					pasajeros,mascotas,discapacitados,bicicleta,td.getFoto()));
+					pasajeros,mascotas,discapacitados,bicicleta,td.getFoto(), referencia));
 	     
 			
 	      }

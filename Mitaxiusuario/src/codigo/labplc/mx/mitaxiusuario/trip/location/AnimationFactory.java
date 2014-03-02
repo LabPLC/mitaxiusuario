@@ -1,4 +1,4 @@
-package codigo.labplc.mx.mitaxi.trip.location;
+package codigo.labplc.mx.mitaxiusuario.trip.location;
 
 import codigo.labplc.mx.mitaxiusuario.R;
 import android.content.Context;

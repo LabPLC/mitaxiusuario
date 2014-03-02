@@ -1,4 +1,4 @@
-package codigo.labplc.mx.mitaxi.trip.location;
+package codigo.labplc.mx.mitaxiusuario.trip.location;
 
 import java.util.ArrayList;
 import java.util.HashMap;

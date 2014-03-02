@@ -1,4 +1,4 @@
-package codigo.labplc.mx.mitaxi.trip.dialogues;
+package codigo.labplc.mx.mitaxiusuario.trip.dialogues;
 
 import android.content.Context;
 import android.util.Log;

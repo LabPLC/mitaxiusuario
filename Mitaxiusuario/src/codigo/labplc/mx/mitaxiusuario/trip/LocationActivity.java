@@ -1,4 +1,4 @@
-package codigo.labplc.mx.mitaxi.trip;
+package codigo.labplc.mx.mitaxiusuario.trip;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -12,9 +12,9 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
-import codigo.labplc.mx.mitaxi.trip.dialogues.Dialogues;
-import codigo.labplc.mx.mitaxi.trip.location.LocationUtils;
 import codigo.labplc.mx.mitaxiusuario.R;
+import codigo.labplc.mx.mitaxiusuario.trip.dialogues.Dialogues;
+import codigo.labplc.mx.mitaxiusuario.trip.location.LocationUtils;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
