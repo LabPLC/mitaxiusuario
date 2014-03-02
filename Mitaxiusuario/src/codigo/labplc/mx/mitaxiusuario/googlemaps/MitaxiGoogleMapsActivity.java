@@ -58,6 +58,8 @@ import codigo.labplc.mx.mitaxiusuario.drivers.TaxiDriverActivity;
 import codigo.labplc.mx.mitaxiusuario.googlemaps.adapters.PlacesAutocompleteAdapter;
 import codigo.labplc.mx.mitaxiusuario.googlemaps.dialogues.Dialogues;
 import codigo.labplc.mx.mitaxiusuario.googlemaps.location.LocationUtils;
+import codigo.labplc.mx.mitaxiusuario.panicbutton.OpenHelp;
+import codigo.labplc.mx.mitaxiusuario.panicbutton.PanicAlert;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -107,6 +109,7 @@ OnItemClickListener {
     // Handle to a SharedPreferences editor
     private SharedPreferences.Editor mEditor;
 
+    private TripPreferencesActivity tripPreferencesActivity;
     /*
      * Note if updates have been turned on. Starts out as "false"; is set to "true" in the
      * method handleRequestSuccess of LocationUpdateReceiver.
@@ -133,10 +136,10 @@ OnItemClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mitaxi_googlemaps);
 
+	
+	initUI();
 		
-		initUI();
-		
-		TripPreferencesActivity tripPreferencesActivity = new TripPreferencesActivity(this);		
+		 tripPreferencesActivity = new TripPreferencesActivity(this);		
 		
 		
 		
@@ -934,6 +937,9 @@ OnItemClickListener {
 	            return true;
 	        case R.id.action_mas:
 	            if(!actvDestination.getText().equals("")){
+	            	String referencia ="";
+	          
+
 	            	//obtenemos las coordenadas
 	            	String destino = actvDestination.getText().toString();
 	            	destino = destino.replaceAll(" ", "+");
@@ -941,10 +947,8 @@ OnItemClickListener {
 					String querty = doHttpConnection(consulta);
 					ArrayList<InfoPoint> InfoPoint;
 					InfoPoint = parsePoints(querty);
-					//Log.d("*************lat",InfoPoint.get(0).getDblLatitude()+"..");
-					//Log.d("*************lng",InfoPoint.get(0).getDblLongitude()+"..");
+
 					
-	            	
 			        	Intent intent = new Intent(MitaxiGoogleMapsActivity.this,TaxiDriverActivity.class);
 			        	intent.putExtra("location", location);
 			        	intent.putExtra("locationD",InfoPoint.get(0).getDblLatitude()+","+InfoPoint.get(0).getDblLongitude());
@@ -957,7 +961,11 @@ OnItemClickListener {
 			        	intent.putExtra("bicicleta", TripPreferencesActivity.bicicleta);
 			        	intent.putExtra("mascotas", TripPreferencesActivity.mascotas);
 			        	intent.putExtra("ingles", TripPreferencesActivity.ingles);
+			        	intent.putExtra("referencia", tripPreferencesActivity.getTripPreferencesActivity());
+			        	
+			        	
 			        	startActivity(intent);
+	            	
 	            }else{
 	            	Toast.makeText(getApplicationContext(), "Ingresa una direcci—n valida", Toast.LENGTH_LONG).show();
 	            }

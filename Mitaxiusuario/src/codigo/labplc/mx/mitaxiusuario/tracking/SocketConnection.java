@@ -24,7 +24,7 @@ import android.content.Intent;
 import android.os.StrictMode;
 import android.sax.StartElementListener;
 import android.util.Log;
-import codigo.labplc.mx.mitaxi.trip.MitaxiTripActivity;
+import codigo.labplc.mx.mitaxiusuario.trip.MitaxiTripActivity;
 
 /**
  * 
@@ -93,43 +93,45 @@ public class SocketConnection {
 			//	System.out.println("Servidor de eventos activa '" + event + "'");
 			//	System.out.println("Servidor de eventos activa Usuario" + args[0] + "'");
 				try {
-					  JSONObject jsonObj = new JSONObject(args[0].toString());
-		                String disposicion = jsonObj.getString("estado");
-		                disposicion  = disposicion.replaceAll(" ", "");
-		                String pk_viaje = jsonObj.getString("pk_viaje");
-		                
-		                String pk_chofer = jsonObj.getString("pk_chofer");
-		                
-		                String placa = jsonObj.getString("placa");
-		                placa  = placa.replaceAll(" ", "");
-		                
-		                String origen = jsonObj.getString("origen");
-		                disposicion  = disposicion.replaceAll(" ", "");
-		                
-		                String destino = jsonObj.getString("destino");
-		                disposicion  = disposicion.replaceAll(" ", "");
-		               
-		                if(disposicion.equals("cancelado")){
-		                	 System.out.println("*******" + "cancelado"+ "");
-		                	 
-		                }else if(disposicion.equals("aceptado")){
-		                	 System.out.println("*******" + "aceptado"+ "");
-		     				
-		                	String consulta = "http://codigo.labplc.mx/~mikesaurio/taxi.php?act=viaje&type=setestatus&pk_viaje="+pk_viaje+"&estado=curso";
-		    				String querty = doHttpConnection(consulta);
-		                	
-		    				Intent intent = new Intent(act,MitaxiTripActivity.class);
-		    				intent.putExtra("pk_viaje", pk_viaje);
-		    				intent.putExtra("pk_chofer", pk_chofer);
-		    				intent.putExtra("placa", placa);
-		    				intent.putExtra("origen", origen);
-		    				intent.putExtra("destino", destino);
-		                	 act.startActivity(intent);
-		                	 
+					if(!args[0].toString().equals("false")){
+						  	JSONObject jsonObj = new JSONObject(args[0].toString());
+			                String disposicion = jsonObj.getString("estado");
+			                disposicion  = disposicion.replaceAll(" ", "");
+			                String pk_viaje = jsonObj.getString("pk_viaje");
+			                
+			                String pk_chofer = jsonObj.getString("pk_chofer");
+			                
+			                String placa = jsonObj.getString("placa");
+			                placa  = placa.replaceAll(" ", "");
+			                
+			                String origen = jsonObj.getString("origen");
+			                disposicion  = disposicion.replaceAll(" ", "");
+			                
+			                String destino = jsonObj.getString("destino");
+			                disposicion  = disposicion.replaceAll(" ", "");
+			               
+			                if(disposicion.equals("cancelado")){
+			                	 System.out.println("*******" + "cancelado"+ "");
+			                	 
+			                }else if(disposicion.equals("aceptado")){
+			                	 System.out.println("*******" + "aceptado"+ "");
+			     				
+			                	String consulta = "http://codigo.labplc.mx/~mikesaurio/taxi.php?act=viaje&type=setestatus&pk_viaje="+pk_viaje+"&estado=curso";
+			    				String querty = doHttpConnection(consulta);
+			                	
+			    				Intent intent = new Intent(act,MitaxiTripActivity.class);
+			    				intent.putExtra("pk_viaje", pk_viaje);
+			    				intent.putExtra("pk_chofer", pk_chofer);
+			    				intent.putExtra("placa", placa);
+			    				intent.putExtra("origen", origen);
+			    				intent.putExtra("destino", destino);
+			                	 act.startActivity(intent);
+			                
 		                }else if(disposicion.equals("pendiente")){
 		                	 System.out.println("*******" + "pendiente"+ "");
 
 		                }
+		              }
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

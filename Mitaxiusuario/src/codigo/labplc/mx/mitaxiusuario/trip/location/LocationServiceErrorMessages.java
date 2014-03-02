@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package codigo.labplc.mx.mitaxi.trip.location;
+package codigo.labplc.mx.mitaxiusuario.trip.location;
 
 import android.content.Context;
 import android.content.res.Resources;

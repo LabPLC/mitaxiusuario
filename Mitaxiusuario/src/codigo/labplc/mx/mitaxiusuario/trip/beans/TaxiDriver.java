@@ -1,4 +1,4 @@
-package codigo.labplc.mx.mitaxi.trip.beans;
+package codigo.labplc.mx.mitaxiusuario.trip.beans;
 
 import java.io.Serializable;
 

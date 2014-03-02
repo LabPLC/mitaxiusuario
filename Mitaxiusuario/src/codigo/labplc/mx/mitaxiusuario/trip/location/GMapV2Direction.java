@@ -1,4 +1,4 @@
-package codigo.labplc.mx.mitaxi.trip.location;
+package codigo.labplc.mx.mitaxiusuario.trip.location;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -19,8 +19,8 @@ import org.w3c.dom.NodeList;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
-import codigo.labplc.mx.mitaxi.trip.MitaxiTripActivity;
-import codigo.labplc.mx.mitaxi.trip.dialogues.Dialogues;
+import codigo.labplc.mx.mitaxiusuario.trip.MitaxiTripActivity;
+import codigo.labplc.mx.mitaxiusuario.trip.dialogues.Dialogues;
 
 import com.google.android.gms.maps.model.LatLng;
 

@@ -3,6 +3,7 @@ package codigo.labplc.mx.mitaxiusuario.googlemaps;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -26,6 +27,7 @@ public class TripPreferencesActivity  {
 	public static boolean sitio =false;
 	public static boolean radio =false;
 	public static boolean rosa =false;
+	public EditText trippreferences_et_referenceorigin;
 	
 	public TripPreferencesActivity(Activity act){
 		this.act=act;
@@ -36,10 +38,7 @@ public class TripPreferencesActivity  {
 	public void initUI() {
 		RelativeLayout view =(RelativeLayout)act.findViewById(R.id.include_activity_mitaxi_trippreferences);
 		
-		/*view.findViewById(R.id.trippreferences_btn_mytaxidrivers).setOnClickListener(this);
-		view.findViewById(R.id.trippreferences_btn_nearesttaxidrivers).setOnClickListener(this);
-		view.findViewById(R.id.trippreferences_btn_cancel).setOnClickListener(this);
-		view.findViewById(R.id.trippreferences_btn_taketaxi).setOnClickListener(this);*/
+		 trippreferences_et_referenceorigin = (EditText) view.findViewById(R.id.trippreferences_et_referenceorigin);
 
 		MyViewGroup vgTaxitype = (MyViewGroup) view.findViewById(R.id.trippreferences_vg_taxitype);
 		vgTaxitype.initUI(LinearLayout.HORIZONTAL,true);
@@ -105,29 +104,14 @@ public class TripPreferencesActivity  {
 		return myView;
 	}
 
-	/*@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		// OnClick taxis favoritos
-		case R.id.trippreferences_btn_mytaxidrivers:
-			act.startActivity(new Intent(act,TaxiDriverActivity.class));
-			
-			break;
-
-		// OnClick taxis más cercanos en distancia
-		case R.id.trippreferences_btn_nearesttaxidrivers:
-			act.startActivity(new Intent(act,TaxiDriverActivity.class));
-			break;
-			
-		// Cancelar la operación
-		case R.id.trippreferences_btn_cancel:
-			act.finish();
-			break;
-
-		// Pedir taxi
-		case R.id.trippreferences_btn_taketaxi:
-			
-			break;
-		}
-	}*/
+	public String  getTripPreferencesActivity(){
+		if(trippreferences_et_referenceorigin.getText().toString().equals("")){
+			return "Sin+Referencia";
+    	}else{
+    		
+    		return trippreferences_et_referenceorigin.getText().toString().replaceAll(" ", "+");
+    	}
+		
+	}
+	
 }

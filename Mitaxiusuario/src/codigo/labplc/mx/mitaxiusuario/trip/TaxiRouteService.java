@@ -1,4 +1,4 @@
-package codigo.labplc.mx.mitaxi.trip;
+package codigo.labplc.mx.mitaxiusuario.trip;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import android.os.IBinder;
 import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Toast;
-import codigo.labplc.mx.mitaxi.trip.dialogues.Dialogues;
+import codigo.labplc.mx.mitaxiusuario.trip.dialogues.Dialogues;
 
 import com.google.android.gms.maps.model.LatLng;
 

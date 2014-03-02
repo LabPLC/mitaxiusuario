@@ -13,8 +13,6 @@ public class UserDAOImp implements UserDAO {
 	
 	@Override
 	public String save(User user) {
-		//new WSConnection.DoHttpConnectionAsyncTask(url).execute("url");
-		
 		return WSConnection.doHttpConnection(url);
 	}
 }

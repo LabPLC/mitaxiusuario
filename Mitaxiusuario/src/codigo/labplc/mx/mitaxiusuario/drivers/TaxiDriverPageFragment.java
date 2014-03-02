@@ -121,6 +121,7 @@ public class TaxiDriverPageFragment extends Fragment {
 			"&costo=0&tiempo=0&distancia=0&pasajeros="+taxiDriver.getPersonas()+
 			"&mascota="+taxiDriver.getMascotas()+
 			"&discapacitado="+taxiDriver.getDiscapacitados()+
+			"&referencia="+taxiDriver.getReferencia()+
 			"&bicicleta="+taxiDriver.getBicicletas();
 			Log.d("******************", consulta+"");
 			String querty = doHttpConnection(consulta);
